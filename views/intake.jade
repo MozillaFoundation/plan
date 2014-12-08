@@ -1,0 +1,102 @@
+extends layout
+
+block content
+  .page-header
+    h3 Create a new Project
+
+    h4 Not all users need the same thing
+    p Describe the type of user(s) that you would like to create something for
+
+    form.form#intake(role='form', method='POST')
+      input(type='hidden', name='_csrf', value=_csrf)
+      .row#step1
+        .col-lg-6
+          div.form-group
+           label.clog-lg-2 Who is this for?
+           div.log-lg-10
+            div.radio
+              label
+                input(name="audience" id="visitors" value="Visitors (Millions)" checked="" type="radio")
+                | Visitors
+           div.log-lg-10
+            div.radio
+              label
+                input(name="audience" id="learners" value="Learners (100Ks)" checked="" type="radio")
+                | Learners (100Ks)
+           div.log-lg-10
+            div.radio
+              label
+                input(name="audience" id="mentors" value="Mentors (10Ks)" checked="" type="radio")
+                | Mentors (10Ks)
+           div.log-lg-10
+            div.radio
+              label
+                input(name="audience" id="teachers" value="Teachers (thousands)" checked="" type="radio")
+                | Teachers (thousands)
+           div.log-lg-10
+            div.radio
+              label
+                input(name="audience" id="partners" value="Partners (hundreds" checked="" type="radio")
+                | Partners (hundreds)
+           div.log-lg-10
+            div.radio
+              label
+                input(name="audience" id="staff" value="Staff (tens)" checked="" type="radio")
+                | Staff (tens)
+
+      .row.hidden#step2
+        h2 What's the problem?
+        h5 Try to describe the problem you are trying to solve as simply as possible.
+        p Example: Too few visitors register for an account
+        .form-group
+          .row
+            .col-sm-8
+              textarea.form-control(name="problem", rows="3")
+
+
+      .row.hidden#step3
+        h2 What would a solution to this problem accomplish?
+        p Sometimes it helps to put this in terms of a metric.
+        p Example: "A 20% increase in new visitors creating an account"
+        .form-group
+          .row
+            .col-sm-8
+              textarea.form-control(name="accomplish", rows="3")
+
+      .row.hidden#step4
+        h2 What is your vision for a solution? 
+        p Keep it high-level for now, you can fill-in details later.
+        p A much simpler form would help
+        .form-group
+          .row
+            .col-sm-8
+              textarea.form-control(name="ideas", rows="3")
+
+      span.btn.btn-primary#continue(onclick="nextstep()") Continue
+
+
+
+
+
+
+
+    .row.hidden#step4
+      .form-group
+        .row 
+          .col-sm-2
+            label(class='col-sm-2 control-label', for='name') Name
+          .col-sm-8
+            input.form-control(type='text', name='name', id='name', autofocus=true)
+      .form-group
+        label(class='col-sm-2 control-label', for='email') Email
+        .col-sm-8
+          input.form-control(type='text', name='email', id='email')
+      .form-group
+        label(class='col-sm-2 control-label', for='message') Body
+        .col-sm-8
+          textarea.form-control(type='text', name='message', id='message', rows='7')
+      .form-group
+        .col-sm-offset-2.col-sm-8
+            | button.btn.btn-primary(type='submit')
+            span.ion-paper-airplane
+            | Send

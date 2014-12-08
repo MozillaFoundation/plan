@@ -1,1 +1,3 @@
-[![Stories in Ready](https://badge.waffle.io/mozillafoundation/plan.svg?label=ready&title=Ready)](http://waffle.io/mozillafoundation/plan)
+# plan.webmaker.org
+
+The site we're using to track initiatives

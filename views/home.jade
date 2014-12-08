@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  .row
+    .col-sm-6
+      h2 Happening now
+      p What people are busily working on
+      ul#issues-now
+    .col-sm-6
+      h2 Next Sprint
+      p Things we will focus on next
+      ul#issues-next
+  h2 Backlog
+  p We have a 
+    a(href="https://waffle.io/mozillafoundation/plan") calendar view 
+    span as well as a list of 
+    a(href="https://github.com/MozillaFoundation/plan/issues?q=is%3Aopen+is%3Aissue+no%3Alabel") unscheduled projects.

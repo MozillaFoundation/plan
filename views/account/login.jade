@@ -1,0 +1,11 @@
+extends ../layout
+
+block content
+  .page-header
+    h3 Sign in
+  form(method='POST')
+    input(type='hidden', name='_csrf', value=_csrf)
+    .col-sm-8.col-sm-offset-2
+      a.btn.btn-block.btn-github.btn-social(href='/auth/github')
+        i.fa.fa-github
+        | Sign in with GitHub
