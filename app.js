@@ -134,7 +134,7 @@ app.post('/account/delete', passportConf.isAuthenticated, userController.postDel
 app.get('/api', apiController.getApi);
 app.get('/api/issues', apiController.getIssues)
 
-app.get('/auth/github', passport.authenticate('github', {scope: 'public_repo'}));
+app.get('/auth/github', passport.authenticate('github', {scope: 'user,public_repo'}));
 app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), function(req, res) {
   res.redirect(req.session.returnTo || '/');
 });
