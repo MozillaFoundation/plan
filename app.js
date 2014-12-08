@@ -135,7 +135,7 @@ app.get('/api', apiController.getApi);
 app.get('/api/issues', apiController.getIssues)
 
 app.get('/auth/github', passport.authenticate('github', {scope: 'user,public_repo'}));
-app.get('/auth/github/callback', passport.authenticate('github', { failureRedirect: '/login' }), function(req, res) {
+app.get('/auth/github/callback', passport.authenticate('github', {scope: 'user,public_repo', failureRedirect: '/login' }), function(req, res) {
   res.redirect(req.session.returnTo || '/');
 });
 
