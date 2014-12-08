@@ -6,7 +6,6 @@ var validator = require('validator');
 var async = require('async');
 var request = require('request');
 var Github = require('github-api');
-
 var GitHubApi = require("github");
 var github = new GitHubApi({
     // required
@@ -14,10 +13,9 @@ var github = new GitHubApi({
     debug: true
 });
 
-var clientID = process.env.GITHUB_ID || 'e982844027ea1cd0cc67';
-var clientSecret = process.env.GITHUB_SECRET || '266fe5c654f2e353589a708b07fd20fbe45d2306';
+var clientID = secrets.github.clientID;
+var clientSecret = secrets.github.clientSecret;
 
-// XXX refactor damn secrets
 github.authenticate({
     type: "oauth",
     key: clientID,
@@ -32,8 +30,6 @@ var _ = require('lodash');
 
 exports.getIssues = function(req, res) {
   var url = "https://api.github.com/repos/" + githubconfig.github_org + '/' + githubconfig.github_repo + "/issues"
-  // var token = _.findWhere(req.user.tokens, { kind: 'github' });
-  // url += "?access_token="+encodeURIComponent(token.accessToken);
   url += "?client_id="+encodeURIComponent(clientID)+"&client_secret="+encodeURIComponent(clientID);
   url += "&labels="+encodeURIComponent(req.query.labels)
   var options = {

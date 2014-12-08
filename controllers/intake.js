@@ -63,6 +63,7 @@ exports.postIntake = function(req, res) {
   body = accomplish + '\n\nAudience: ' + audience + '\nI suggest: ' + ideas + template;
   var url = "https://api.github.com/repos/" + githubconfig.github_org + '/' + githubconfig.github_repo + "/issues"
   var accessToken = req.user.tokens[0].accessToken;
+  console.log('accessToken', accessToken);
   url += "?access_token="+encodeURIComponent(accessToken);
   var options = {
       url: url,
@@ -79,6 +80,10 @@ exports.postIntake = function(req, res) {
       req.flash('errors', err);
       return res.redirect('/intake');
     } else {
+      if (ret.statusCode >= 400) {
+        req.flash('errors', {'msg': JSON.parse(body).message});
+        return res.redirect('/');
+      }
       return res.redirect(JSON.parse(body).html_url);
     }
   });
