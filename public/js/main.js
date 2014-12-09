@@ -1,6 +1,5 @@
 
 function getIssues(label, cb, err) {
-  console.log("LABEL", label)
   $.ajax('/api/issues', {
     data: {
       'labels': label
@@ -11,14 +10,32 @@ function getIssues(label, cb, err) {
       cb && cb(JSON.parse(data));
     },
     error: function(data, error) {
+      console.log("GOT ERROR", error, data)
       err && err(error);
     }
   });
+}
+function issuePriority(issue) {
+  var labels = issue.labels;
+  for (var j = 0; j < labels.length; j++) {
+    var l = labels[j];
+    if (l.name[0] == 'p' && (l.name[1] == '1') || l.name[1] == '2' || l.name[1] == '3') {
+      return Number(l.name[1])
+    }
+  }
+  return 0;
 }
 
 function populateIssues(elementid, label) {
   var lis = document.querySelector(elementid);
   getIssues(label, function(issues) {
+    issues.sort(function(issue1, issue2) {
+      if (issuePriority(issue1) > issuePriority(issue2))
+        return 1;
+      else if (issuePriority(issue1) < issuePriority(issue2))
+        return -1;
+      else return 0;
+    });
     for (var i = 0; i < issues.length;i++) {
       var issue = issues[i];
       var labels = issue.labels;
@@ -34,21 +51,23 @@ function populateIssues(elementid, label) {
       div.setAttribute('id', "issue_" + issue.id);
       div.classList.add('desc');
       var h5 = document.createElement('h5');
-      var i = document.createElement('i');
-      i.classList.add('fa');
-      i.classList.add('fa-comments');
-      h5.appendChild(i);
+      var icon = document.createElement('i');
+      icon.classList.add('fa');
+      icon.classList.add('fa-comments');
+      h5.appendChild(icon);
       var a = document.createElement('a');
       a.href = issue.html_url;
       a.textContent = issue.title;
       p = document.createElement('p');
       if (issue.body) {
-        // Note: doesn't do github emoji support.
+        // Note: doesn't yet support github emoji
         p.textContent = issue.body.split('\n')[0];
       }
-      h5.appendChild(a)
       div.appendChild(h5);
-
+      var tags = document.createElement('span');
+      tags.classList.add('tags');
+      h5.appendChild(tags);
+      h5.appendChild(a)
 
       var tag = document.createElement("span");
       tag.classList.add("tag");
@@ -59,33 +78,32 @@ function populateIssues(elementid, label) {
         tag.classList.add("unknown");
         tag.textContent = "???";
       }
-      div.appendChild(tag);
+      tags.appendChild(tag);
 
       // do all the non-status, non-date labels too
-      for (var j = 0; j < labels.length; j++) {
-        var l = labels[j];
-        if (l.name.indexOf('status:') == 0) 
-          continue;
-        if ((l.name.indexOf('jan') == 0) || 
-            (l.name.indexOf('feb') == 0) || 
-            (l.name.indexOf('mar') == 0) || 
-            (l.name.indexOf('apr') == 0) || 
-            (l.name.indexOf('may') == 0) || 
-            (l.name.indexOf('jun') == 0) || 
-            (l.name.indexOf('jul') == 0) || 
-            (l.name.indexOf('aug') == 0) || 
-            (l.name.indexOf('sep') == 0) || 
-            (l.name.indexOf('oct') == 0) || 
-            (l.name.indexOf('nov') == 0) || 
-            (l.name.indexOf('dec') == 0))
-          continue;
-        var color = "#"+l.color;
-        tag = document.createElement("span");
-        tag.classList.add("tag");
-        tag.style.backgroundColor = color;
-        tag.style.opacity = "0.5";
-        tag.textContent = l.name;
-        div.appendChild(tag);
+      for (var k = 0; k < labels.length; k++) {
+        var l = labels[k];
+        if ((l.name.indexOf('status:') != 0) && 
+            (l.name.indexOf('jan') != 0) && 
+            (l.name.indexOf('feb') != 0) && 
+            (l.name.indexOf('mar') != 0) && 
+            (l.name.indexOf('apr') != 0) && 
+            (l.name.indexOf('may') != 0) && 
+            (l.name.indexOf('jun') != 0) && 
+            (l.name.indexOf('jul') != 0) && 
+            (l.name.indexOf('aug') != 0) && 
+            (l.name.indexOf('sep') != 0) && 
+            (l.name.indexOf('oct') != 0) && 
+            (l.name.indexOf('nov') != 0) && 
+            (l.name.indexOf('dec') != 0)) {
+          var color = "#"+l.color;
+          tag = document.createElement("span");
+          tag.classList.add("tag");
+          tag.style.backgroundColor = color;
+          tag.style.opacity = "0.5";
+          tag.textContent = l.name;
+          tags.appendChild(tag);
+        }
       }
       div.appendChild(p);
       lis.appendChild(div);
@@ -109,7 +127,6 @@ function nextstep() {
 var step = 1;
 var laststep = 4;
 $(document).ready(function() {
-  console.log(document.location.pathname);
   if (document.location.pathname == '/') {
     populateIssues('#issues-now', 'dec12');
     populateIssues('#issues-next', 'dec24');

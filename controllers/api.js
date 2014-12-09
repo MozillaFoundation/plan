@@ -32,6 +32,15 @@ exports.getIssues = function(req, res) {
   var url = "https://api.github.com/repos/" + githubconfig.github_org + '/' + githubconfig.github_repo + "/issues"
   url += "?client_id="+encodeURIComponent(clientID)+"&client_secret="+encodeURIComponent(clientID);
   url += "&labels="+encodeURIComponent(req.query.labels)
+  var token = secrets.github.token;
+  url += "&access_token="+encodeURIComponent(token);
+
+  // var token = _.find(req.user.tokens, { kind: 'github' });
+  // if (req.user && req.user.tokens && req.user.tokens[0].accessToken) {
+  //   // if logged in, we'll skip any rate limiting.
+  //   var accessToken = req.user.tokens[0].accessToken;
+  //   url += "?access_token="+encodeURIComponent(accessToken);
+  // }
   var options = {
       url: url,
       headers: {
@@ -39,44 +48,17 @@ exports.getIssues = function(req, res) {
       }
   };
   request.get(options, function(err, ret, body) {
+    console.log(ret.statusCode);
     if (err) {
       console.log(err);
       res.status('500').json(err);
     } else {
-      // console.log(body);
-      res.status('200').json(body);
+      if (ret.statusCode >= 400) {
+        res.status(ret.statusCode).json(body);
+      } else {
+        res.status('200').json(body);
+      }
     }
   });
 }
 
-
-
-/**
- * GET /api
- * List of API examples.
- */
-
-exports.getApi = function(req, res) {
-  res.render('api/index', {
-    title: 'API Examples'
-  });
-};
-
-/**
- * GET /api/github
- * GitHub API Example.
- */
-
-exports.getGithub = function(req, res, next) {
-  var token = _.find(req.user.tokens, { kind: 'github' });
-  var github = new Github({ token: token.accessToken });
-  var repo = github.getRepo('sahat', 'requirejs-library');
-  repo.show(function(err, repo) {
-    if (err) return next(err);
-    res.render('api/github', {
-      title: 'GitHub API',
-      repo: repo
-    });
-  });
-
-};

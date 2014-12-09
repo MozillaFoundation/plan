@@ -12,6 +12,7 @@ module.exports = {
   github: {
     clientID: env.get('GITHUB_CLIENTID'),
     clientSecret: env.get('GITHUB_CLIENTSECRET'),
+    token: env.get('GITHUB_TOKEN'),
     callbackURL: '/auth/github/callback',
     passReqToCallback: true
   }

@@ -131,7 +131,6 @@ app.get('/account', passportConf.isAuthenticated, userController.getAccount);
 
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 
-app.get('/api', apiController.getApi);
 app.get('/api/issues', apiController.getIssues)
 
 app.get('/auth/github', passport.authenticate('github', {scope: 'user,repo,public_repo'}));
