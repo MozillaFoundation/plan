@@ -3,5 +3,6 @@ node_js:
 - '0.10'
 deploy:
   provider: heroku
+  app: mofo-intake
   api_key:
     secure: qPS6iGIip0akU9KJRrLVUb3IGnO5tyzW8HgRBcepZjm3Q4nHHe4cJ2B3BwAYphB2T6ERP1Dg0RdOvwDgDST7t4yt5fVM1ssIaVI1CbfVt6WwBo+IbwarBgCl7LfbWv3i5kTk1Vh9mMY0UedpvJSRF3ddxvU1Bl1VV9/cA9vSuMI=
