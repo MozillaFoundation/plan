@@ -31,16 +31,16 @@ var _ = require('lodash');
 exports.getIssues = function(req, res) {
   var url = "https://api.github.com/repos/" + githubconfig.github_org + '/' + githubconfig.github_repo + "/issues"
   url += "?client_id="+encodeURIComponent(clientID)+"&client_secret="+encodeURIComponent(clientID);
-  url += "&labels="+encodeURIComponent(req.query.labels)
-  var token = secrets.github.token;
+  url += "&labels="+encodeURIComponent(req.query.labels);
+  var token;
+  if (req.user && req.user.tokens && req.user.tokens[0].accessToken) {
+    // if logged in, we'll skip any rate limiting by using the user's token
+    token = req.user.tokens[0].accessToken;
+  } else {
+    // we'll use a token davidascher made to also avoid rate limiting
+    token = secrets.github.token;
+  }
   url += "&access_token="+encodeURIComponent(token);
-
-  // var token = _.find(req.user.tokens, { kind: 'github' });
-  // if (req.user && req.user.tokens && req.user.tokens[0].accessToken) {
-  //   // if logged in, we'll skip any rate limiting.
-  //   var accessToken = req.user.tokens[0].accessToken;
-  //   url += "?access_token="+encodeURIComponent(accessToken);
-  // }
   var options = {
       url: url,
       headers: {

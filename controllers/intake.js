@@ -63,12 +63,13 @@ exports.postIntake = function(req, res) {
   body = accomplish + '\n\nAudience: ' + audience + '\nI suggest: ' + ideas + template;
   var url = "https://api.github.com/repos/" + githubconfig.github_org + '/' + githubconfig.github_repo + "/issues"
   var token = secrets.github.token;
-  url += "?access_token="+encodeURIComponent(token);
-  // if (req.user && req.user.tokens && req.user.tokens[0].accessToken) {
-  //   // if logged in, we'll skip any rate limiting.
-  //   var accessToken = req.user.tokens[0].accessToken;
-  //   url += "?access_token="+encodeURIComponent(accessToken);
-  // }
+  if (req.user && req.user.tokens && req.user.tokens[0].accessToken) {
+    // we have to be logged in, so we'll skip any rate limiting.
+    var accessToken = req.user.tokens[0].accessToken;
+    url += "?access_token="+encodeURIComponent(accessToken);
+  } else {
+    return; // shouldn't endup here anyway as we should be logged in.
+  }
   var options = {
       url: url,
       headers: {

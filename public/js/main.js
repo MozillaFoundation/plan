@@ -26,7 +26,11 @@ function issuePriority(issue) {
   return 0;
 }
 
-function populateIssues(elementid, label) {
+function populateIssues(elementid, label, deadlineid, deadlinelabel) {
+  var deadline = document.querySelector(deadlineid);
+  deadline.textContent = deadlinelabel;
+  deadline.href = "https://github.com/MozillaFoundation/plan/issues?q=is%3Aopen+is%3Aissue+label%3A"+label;
+
   var lis = document.querySelector(elementid);
   getIssues(label, function(issues) {
     issues.sort(function(issue1, issue2) {
@@ -128,7 +132,7 @@ var step = 1;
 var laststep = 4;
 $(document).ready(function() {
   if (document.location.pathname == '/') {
-    populateIssues('#issues-now', 'dec12');
-    populateIssues('#issues-next', 'dec24');
+    populateIssues('#issues-now', 'dec12', '#deadline-now', '(by Dec 12th)');
+    populateIssues('#issues-next', 'dec24', '#deadline-next', '(by Dec 24th)');
   };
 });
