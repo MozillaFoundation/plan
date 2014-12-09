@@ -1,7 +1,7 @@
 var githubconfig = require('../config/github');
 var request = require('request');
 var _ = require('lodash');
-
+var secrets = require('../config/secrets');
 
 /**
  * GET /contact
@@ -22,31 +22,32 @@ exports.getIntake = function(req, res) {
  * @param message
  */
 
-var template = '\n\ - [ ] Consultation Meeting Scheduled: …\n'+
-' - [ ] Understand big-picture objective of the request: …\n'+
-' - [ ] Agree on context: …\n'+
-' - [ ] Find out Deadline: …\n'+
-' - [ ] Is deadline firm or flexible: …\n'+
-' - [ ] Establish RACI: …\n'+
-' - [ ] What resources exist: …\n'+
-' - [ ] What is the audience: …\n'+
-' - [ ] Suss out likelihood of scope creep: …\n'+
-' - [ ] Determine MVP scope: …\n'+
-' - [ ] What domain should be used: …\n'+
-' - [ ] Will it be hosted on mozilla.org: …\n'+
-' - [ ] Find out how long it need to be maintained: …\n'+
-' - [ ] Agree on who will do maintenance: …\n'+
-' - [ ] Determine localization needs : …\n'+
-' - [ ] Establish Milestones: …\n'+
-' - [ ] Understand if analytics required: …\n'+
-' - [ ] Determine what degree of quality is required: …\n'
+var checklist = '\n\n' +
+  ' - [ ] Kickoff meeting scheduled.\n' +
+  ' - [ ] Deadline and flexibility established.\n' +
+  ' - [ ] Localization plan created.\n' +
+  ' - [ ] Milestones created.\n' +
+  ' - [ ] Maintenance plan created.\n' +
+  ' - [ ] Analytices plan created.\n' +
+  ' - [x] Scope creep avoided.\n';
+
+var raci = '\n\n' +
+  '* Phase: \n' +
+  '* Owner: \n' +
+  '* Decision Maker: \n' +
+  '* Design Lead: \n' +
+  '* Development Lead: \n' +
+  '* Quality Verifier: \n';
 
 exports.postIntake = function(req, res) {
 
-  req.assert('audience', 'You have to specify an audience').notEmpty();
-  req.assert('problem', 'We can solve a problem we don\'t undderstand').notEmpty();
-  req.assert('accomplish', 'We need to understand what you\'re trying to accomplish').notEmpty();
-  
+  req.assert('audience', 'You have to specify an audience.').notEmpty();
+  req.assert('problem', 'We can\'t solve a problem we don\'t understand.').notEmpty();
+  req.assert('success', 'We need to understand what you\'re trying to accomplish.').notEmpty();
+  req.assert('vision', 'You must enlighten us with your vision for a solution.').notEmpty();
+  req.assert('mvp', 'Think simply: how do I write an MVP?').notEmpty();
+  req.assert('risks', 'You risk losing your work by not telling us where the hidden problems are.').notEmpty();
+
   var errors = req.validationErrors();
 
   if (errors) {
@@ -56,12 +57,23 @@ exports.postIntake = function(req, res) {
 
   var audience = req.body.audience;
   var problem = req.body.problem;
-  var accomplish = req.body.accomplish;
-  var ideas = req.body.ideas;
+  var success = req.body.success;
+  var vision = req.body.vision;
+  var mvp = req.body.mvp;
+  var risks = req.body.risks;
   var name = req.user.profile.name;
 
-  body = accomplish + '\n\nAudience: ' + audience + '\nI suggest: ' + ideas + template;
-  var url = "https://api.github.com/repos/" + githubconfig.github_org + '/' + githubconfig.github_repo + "/issues"
+  var body = '' +
+    '## Problem\n' + problem + '\n\n' +
+    '### Audience\n' + audience + '\n\n' +
+    '### Success\n' + success + '\n\n' +
+    '### Vision\n' + vision + '\n\n' +
+    '#### MVP\n' + mvp + '\n\n' +
+    '### Risks\n' + risks + '\n\n' +
+    '## Preparation Checklist\n' + checklist + '\n\n' +
+    '## RACI\n' + raci;
+
+  var url = "https://api.github.com/repos/" + githubconfig.github_org + '/' + githubconfig.github_repo + "/issues";
   var token = secrets.github.token;
   if (req.user && req.user.tokens && req.user.tokens[0].accessToken) {
     // we have to be logged in, so we'll skip any rate limiting.

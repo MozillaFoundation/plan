@@ -131,12 +131,37 @@ function nextstep() {
   }
   step++;
   $("#step" + step)[0].classList.remove('hidden');
+  var input = $("#step" + step + ' textarea')[0];
+  if (input) {
+    input.focus();
+  }
 }
 
 
 var step = 1;
 var laststep = 4;
 $(document).ready(function() {
+
+  laststep = document.querySelectorAll('.step').length;
+
+  var textAreas = document.querySelectorAll('.step textarea');
+  Array.prototype.forEach.call(textAreas, function (textArea) {
+    var commandKeyDown = false;
+
+    // when user presses command/ctrl+enter, go to next step
+    textArea.onkeydown = function (e) {
+      if (e.keyCode === 13 && (commandKeyDown || e.ctrlKey)) {
+        nextstep();
+      }
+
+      // got these from http://stackoverflow.com/questions/3902635/how-does-one-capture-a-macs-command-key-via-javascript
+      commandKeyDown = [224, 17, 91, 93].indexOf(e.keyCode) > -1;
+    };
+    textArea.onkeyup = function (e) {
+      commandKeyDown = [224, 17, 91, 93].indexOf(e.keyCode) > -1;
+    };
+  });
+
   if (document.location.pathname == '/') {
     // XXX: move this to some configuration file somewhere easier to find.
     // XXX: make the org + repo also easier to configure in one location.
