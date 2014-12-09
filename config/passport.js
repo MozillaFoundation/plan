@@ -32,7 +32,6 @@ passport.deserializeUser(function(id, done) {
  */
 
 // Sign in with GitHub.
-console.log('secrets.github', secrets.github)
 passport.use(new GitHubStrategy(secrets.github, function(req, accessToken, refreshToken, profile, done) {
   if (req.user) {
     User.findOne({ github: profile.id }, function(err, existingUser) {
