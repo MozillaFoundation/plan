@@ -27,6 +27,7 @@ function issuePriority(issue) {
 }
 
 function populateIssues(elementid, label, deadlineid, deadlinelabel) {
+  emoji.use_sheet = true;
   var deadline = document.querySelector(deadlineid);
   deadline.textContent = deadlinelabel;
   deadline.href = "https://github.com/MozillaFoundation/plan/issues?q=is%3Aopen+is%3Aissue+label%3A"+label;
@@ -64,8 +65,13 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
       a.textContent = issue.title;
       p = document.createElement('p');
       if (issue.body) {
+        var raw_text = issue.body.split('\n')[0];
+        console.log(raw_text);
+        var pretty_text = emoji.replace_colons(raw_text)
+        console.log(pretty_text);
+        p.innerHTML = pretty_text;
         // Note: doesn't yet support github emoji
-        p.textContent = issue.body.split('\n')[0];
+        // p.textContent = 
       }
       div.appendChild(h5);
       var tags = document.createElement('span');
@@ -132,6 +138,8 @@ var step = 1;
 var laststep = 4;
 $(document).ready(function() {
   if (document.location.pathname == '/') {
+    // XXX: move this to some configuration file somewhere easier to find.
+    // XXX: make the org + repo also easier to configure in one location.
     populateIssues('#issues-now', 'dec12', '#deadline-now', '(by Dec 12th)');
     populateIssues('#issues-next', 'dec24', '#deadline-next', '(by Dec 24th)');
   };
