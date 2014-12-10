@@ -25,12 +25,67 @@ footer {
   line-height: 45px;
 }
 
-li.desc {
+li.issue {
   list-style: none;
+  padding-left: 2em;
+  margin-left: 0;
 }
 
+.prioritygroup:before {
+  font-size: x-large;
+  opacity: 0.3;
+  margin-left: -1.7em;
+  float: left;
+}
+
+.prioritygroup.p1:before {
+  content: "P1";
+}
+
+.prioritygroup {
+  border-top: 1px solid rgba(0,0,0,0.1);
+}
+
+.prioritygroup.p2:before {
+  content: "P2";
+}
+
+span.placeholderavatar {
+  width: 32px;
+  height: 32px;
+  font-size: xx-large;
+  float: left;
+  margin-left: -12px;
+  margin-right: 12px;
+}
+
+img.avatar {
+  width: 32px;
+  height: 32px;
+  float: left;
+  margin-left: -12px;
+  margin-right: 12px;
+}
+
+
+li
 ul#issues-now, ul#issues-next {
   padding-left: 2em;
+}
+li.issue h5 {
+  margin-bottom: 0.2 ex;
+}
+
+li.issue a {
+  line-height: 1.3em;
+}
+
+li.issue p {
+  padding-left: 1em;
+}
+
+li.issue {
+  padding-bottom: 1em;
 }
 
 a.deadline {
