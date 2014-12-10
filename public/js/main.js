@@ -66,16 +66,20 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
       var h5 = document.createElement('h5');
       var icon;
       if (issue.assignee && issue.assignee.avatar_url) {
+        var link = document.createElement('a');
+        link.href = issue.assignee.html_url;
         icon = document.createElement('img');
         icon.classList.add('avatar');
         icon.src = issue.assignee.avatar_url;
+        link.appendChild(icon);
+        h5.appendChild(link);
       } else {
         icon = document.createElement('span');
         icon.classList.add('placeholderavatar');
         icon.classList.add('fa');
         icon.classList.add('fa-question');
+        h5.appendChild(icon);
       }
-      h5.appendChild(icon);
       var a = document.createElement('a');
       a.href = issue.html_url;
       a.textContent = issue.title;
