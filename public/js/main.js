@@ -99,12 +99,13 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
       tag.classList.add("tag");
       if (status) {
         tag.style.backgroundColor = color;
-        tag.textContent = status;
       } else {
-        tag.classList.add("unknown");
-        tag.textContent = "???";
+        status = 'needupdate'
       }
+      tag.classList.add(status);
+      tag.textContent = status;
       tags.appendChild(tag);
+      div.classList.add(status);
 
       // do all the non-status, non-date labels too
       for (var k = 0; k < labels.length; k++) {
