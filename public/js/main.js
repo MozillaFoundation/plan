@@ -23,7 +23,7 @@ function issuePriority(issue) {
       return Number(l.name[1])
     }
   }
-  return 0;
+  return 100;
 }
 
 function populateIssues(elementid, label, deadlineid, deadlinelabel) {
@@ -32,7 +32,7 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
   deadline.textContent = deadlinelabel;
   deadline.href = "https://github.com/MozillaFoundation/plan/issues?q=is%3Aopen+is%3Aissue+label%3A"+label;
 
-  var lis = document.querySelector(elementid);
+  var container = document.querySelector(elementid);
   getIssues(label, function(issues) {
     issues.sort(function(issue1, issue2) {
       if (issuePriority(issue1) > issuePriority(issue2))
@@ -41,10 +41,13 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
         return -1;
       else return 0;
     });
+    var ul = null;
+    var last_priority = -1;
     for (var i = 0; i < issues.length;i++) {
       var issue = issues[i];
       var labels = issue.labels;
       var status = null;
+      var priority = issuePriority(issue);
       for (var j = 0; j < labels.length; j++) {
         var l = labels[j];
         if (l.name.indexOf('status:') == 0) {
@@ -52,13 +55,26 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
         }
         var color = "#"+l.color;
       }
+
       var div = document.createElement('li');
       div.setAttribute('id', "issue_" + issue.id);
-      div.classList.add('desc');
+      div.classList.add('issue');
+      var priority = issuePriority(issue);
+      if (priority) {
+        div.classList.add('p'+priority);
+      }
       var h5 = document.createElement('h5');
-      var icon = document.createElement('i');
-      icon.classList.add('fa');
-      icon.classList.add('fa-comments');
+      var icon;
+      if (issue.assignee && issue.assignee.avatar_url) {
+        icon = document.createElement('img');
+        icon.classList.add('avatar');
+        icon.src = issue.assignee.avatar_url;
+      } else {
+        icon = document.createElement('span');
+        icon.classList.add('placeholderavatar');
+        icon.classList.add('fa');
+        icon.classList.add('fa-question');
+      }
       h5.appendChild(icon);
       var a = document.createElement('a');
       a.href = issue.html_url;
@@ -66,12 +82,8 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
       p = document.createElement('p');
       if (issue.body) {
         var raw_text = issue.body.split('\n')[0];
-        console.log(raw_text);
         var pretty_text = emoji.replace_colons(raw_text)
-        console.log(pretty_text);
-        p.innerHTML = pretty_text;
-        // Note: doesn't yet support github emoji
-        // p.textContent = 
+        p.innerHTML = pretty_text; // XXX would like something safer.
       }
       div.appendChild(h5);
       var tags = document.createElement('span');
@@ -105,7 +117,9 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
             (l.name.indexOf('sep') != 0) && 
             (l.name.indexOf('oct') != 0) && 
             (l.name.indexOf('nov') != 0) && 
-            (l.name.indexOf('dec') != 0)) {
+            (l.name.indexOf('dec') != 0) && 
+            (l.name.indexOf('p1') != 0) && 
+            (l.name.indexOf('p2') != 0)) {
           var color = "#"+l.color;
           tag = document.createElement("span");
           tag.classList.add("tag");
@@ -116,7 +130,16 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
         }
       }
       div.appendChild(p);
-      lis.appendChild(div);
+      if (!ul || priority != last_priority) {
+        ul = document.createElement('ul');
+        ul.classList.add('prioritygroup');
+        ul.classList.add('p' + String(priority));
+        ul.appendChild(div);
+        container.appendChild(ul);
+        last_priority = priority;
+      } else {
+        ul.appendChild(div);
+      }
     }
   });
 }
