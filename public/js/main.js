@@ -1,4 +1,4 @@
-
+  
 function getIssues(label, cb, err) {
   $.ajax('/api/issues', {
     data: {
@@ -35,21 +35,117 @@ function showIssuesBasedOnQueryString() {
   if (sprintEndDate.week() % 2 == 1) { // this may need to be tweaked yearly
     sprintEndDate = sprintEndDate.add(7, 'days');
   }
-  console.log(document.location.pathname)
   if (document.location.pathname == '/next') {
     sprintEndDate = sprintEndDate.add(14, 'days');
     // Special cases for special dates
-    console.log(sprintEndDate.format('YYYY-MM-DD'))
     if (sprintEndDate.isSame(moment("2014-12-26"), 'day')) {
       sprintEndDate = moment("2014-12-24")
     }
   }
   label = sprintEndDate.format('MMMDD').toLowerCase();
-  console.log("label", label);
-  console.log(sprintEndDate);
   deadline = sprintEndDate.format("MMM Do")
-  console.log("deadline: ", deadline)
   populateIssues('#issues', label, '#deadline', 'by '+ deadline);
+}
+
+var people = {}
+
+function recordOwners(ownernick, issue) {
+  ownernick = ownernick.toLowerCase();
+  if (! (ownernick in people)) {
+    people[ownernick] = [];
+  }
+  people[ownernick].push(['owner', issue])
+}
+
+function recordRole(ownernick, role, issue) {
+  ownernick = ownernick.toLowerCase();
+  role = role.toLowerCase();
+  if (! (ownernick in people)) {
+    people[ownernick] = [];
+  }
+  for (var i=0; i<people[ownernick].length;i++) {
+    console.log(people[ownernick][i][0], role);
+    console.log(people[ownernick][i][1].id, issue.id);
+    if ((people[ownernick][i][0] == role) && (people[ownernick][i][1].id == issue.id)) {
+      return; // often owner is indicated both in assignment and in the description
+    }
+  }
+  people[ownernick].push([role.toLowerCase(), issue]);
+}
+
+function parseBodyAssignments(body, issue) {
+  var lines = body.split('\n');
+  for (var i=0; i < lines.length; i++) {
+    var line = lines[i];
+    var parts = line.split(/(\W*)([\s\w]*):\s*@(\w*)/gi);    
+    if (parts.length > 3) {
+      recordRole(parts[3], parts[2], issue);
+    }
+  }
+}
+
+
+function turnAvatarDataIntoDOM(data) {
+  var a = document.createElement('a');
+  a.href = data.html_url;
+  a.title = data.name
+  var icon = document.createElement('img');
+  icon.classList.add('avatar');
+  icon.src = data.avatar_url;
+  a.appendChild(icon);
+  return a
+}
+
+function placeAvatar(name, cb) {
+  $.ajax('/api/user', {
+    data: {
+      'username': name
+    },
+    type: 'get',
+    format: 'json',
+    success: function(data) {
+      data = JSON.parse(data);
+      cb(name, turnAvatarDataIntoDOM(data))
+    },
+    error: function(data, error) {
+      console.log("GOT ERROR", error, data)
+    }
+  });
+
+}
+
+function layoutPeopleRoles() {
+  var ul = document.querySelector('#roles');
+
+  for (var name in people) { 
+    placeAvatar(name, function(name, avatar) {
+
+      var li = document.createElement('li')
+      li.classList.add('person');
+      li.id = "person_"+name;
+      ul.appendChild(li);
+      li.appendChild(avatar);
+
+      var roles = document.createElement('div')
+      roles.classList.add('roles');
+      li.appendChild(roles);
+
+      person = people[name]
+      for (var i =0; i<person.length; i++) {
+        assignment = person[i];
+        var role = document.createElement('div');
+        role.classList.add('role');
+        var title = document.createElement('span')
+        title.textContent = assignment[0] + " for ";
+        issue = document.createElement('a');
+        issue.href = assignment[1].html_url;
+        issue.textContent = assignment[1].title;
+        role.appendChild(title);
+        role.appendChild(issue);
+        roles.appendChild(role);
+      }
+    });
+  }
 }
 
 function populateIssues(elementid, label, deadlineid, deadlinelabel) {
@@ -95,6 +191,8 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
         icon = document.createElement('img');
         icon.classList.add('avatar');
         icon.src = issue.assignee.avatar_url;
+        recordOwners(issue.assignee.login, issue);
+
       } else {
         icon = document.createElement('span');
         icon.classList.add('placeholderavatar');
@@ -107,6 +205,7 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
       a.textContent = issue.title;
       p = document.createElement('p');
       if (issue.body) {
+        parseBodyAssignments(issue.body, issue);
         var raw_text = issue.body.split('\n')[0];
         var pretty_text = emoji.replace_colons(raw_text)
         p.innerHTML = pretty_text; // XXX would like something safer.
@@ -167,6 +266,7 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
         ul.appendChild(div);
       }
     }
+    // layoutPeopleRoles();
   });
 }
 

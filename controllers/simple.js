@@ -37,7 +37,7 @@ exports.next = function(req, res) {
  * GET /who
  * Who page.
  */
-exports.next = function(req, res) {
+exports.who = function(req, res) {
   res.render('who', {
     title: 'Who',
   });
