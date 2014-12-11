@@ -124,6 +124,8 @@ app.get('/', simpleController.index);
 app.get('/now', simpleController.now);
 app.get('/next', simpleController.next);
 app.get('/who', simpleController.who);
+app.get('/design', simpleController.design);
+app.get('/tools', simpleController.tools);
 
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);

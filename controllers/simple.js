@@ -42,3 +42,23 @@ exports.who = function(req, res) {
     title: 'Who',
   });
 };
+
+/**
+ * GET /design
+ * Who page.
+ */
+exports.design = function(req, res) {
+  res.render('design', {
+    title: 'Design',
+  });
+};
+
+/**
+ * GET /who
+ * Who page.
+ */
+exports.tools = function(req, res) {
+  res.render('tools', {
+    title: 'Tools',
+  });
+};

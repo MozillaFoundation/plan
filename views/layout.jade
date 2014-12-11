@@ -14,33 +14,49 @@ html
 
     .container-fluid
       .row
-        .col-md-2.sidebarcol
-          div.sidebar
-            ul
-              li(class=title=='home'?'active intake':'intake')
-                a(href='/')
-                  span build.
-                  img(src="/smalllogo.png",style="display:inline; padding-right: .5em;")
-              li(class=title=='intake'?'active intake':'intake')
-                a(href='/intake') NEW
-              li(class=title=='Now'?'active now':'now')
-                a(href='/now') NOW
-              li(class=title=='Next'?'active now':'next')
-                a(href='/now') NEXT
-              li(class=title=='Year'?'active year':'year')
-                a(href='https://waffle.io/mozillafoundation/plan') YEAR
-              li(class=title=='Plan'?'active plan':'plan')
-                a(href='https://wiki.mozilla.org/Webmaker/2015') 2015 PLAN
-              li(class=title=='Who'?'active who':'who')
-                a(href='/who') WHO
-              li(class=title=='Design'?'active design':'design')
-                a(href='/design') DESIGN
-              li(class=title=='Tools'?'active tools':'tools')
-                a(href='/tools') TOOLS
-        .col-md-8
-          include partials/flash
-          block content
-          include partials/footer
+        .col-md-3.col-xs-3.sidebar
+          ul
+            li(class=title=='home'?'active intake':'intake')
+              a(href='/')
+                i.fa.fa-home
+                span build.
+                img(src="/smalllogo.png",style="display:inline; padding-right: .5em;")
+            li(class=title=='intake'?'active intake':'intake')
+              a(href='/intake') NEW
+            li(class=title=='Now'?'active now':'now')
+              a(href='/now') NOW
+            li(class=title=='Next'?'active now':'next')
+              a(href='/next') NEXT
+            li(class=title=='Year'?'active year':'year')
+              a(href='https://waffle.io/mozillafoundation/plan') 
+                | YEAR 
+                <i class="fa fa-external-link"></i>
+            li(class=title=='Plan'?'active plan':'plan')
+              a(href='https://wiki.mozilla.org/Webmaker/2015') 
+                | 2015 PLAN
+                <i class="fa fa-external-link"></i>
+            li(class=title=='Who'?'active who':'who')
+              a(href='/who') WHO
+            li(class=title=='Design'?'active design':'design')
+              a(href='/design') DESIGN
+            li(class=title=='Tools'?'active tools':'tools')
+              a(href='/tools') TOOLS
 
+            li.small
+              a(href='https://github.com/MozillaFoundation/plan') 
+                i.fa.fa-github
+                | source
+            li.small
+              a(href='https://github.com/MozillaFoundation/plan/issues?q=is%3Aopen+is%3Aissue+label%3Adashboard') 
+                i.fa.fa-bug
+                | bugs
+
+        .col-md-8.col-xs-8.col-sm-offset-3
+          include partials/flash
+          div.content
+            block content
+      .row.footer
+        .col-md-8
+          include partials/footer
 
     != js('application')
