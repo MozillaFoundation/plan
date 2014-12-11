@@ -188,18 +188,21 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
       var h5 = document.createElement('h5');
       var icon;
       if (issue.assignee && issue.assignee.avatar_url) {
+        var link = document.createElement('a');
+        link.href = issue.assignee.html_url;
         icon = document.createElement('img');
         icon.classList.add('avatar');
         icon.src = issue.assignee.avatar_url;
         recordOwners(issue.assignee.login, issue);
-
+        link.appendChild(icon);
+        h5.appendChild(link);
       } else {
         icon = document.createElement('span');
         icon.classList.add('placeholderavatar');
         icon.classList.add('fa');
         icon.classList.add('fa-question');
+        h5.appendChild(icon);
       }
-      h5.appendChild(icon);
       var a = document.createElement('a');
       a.href = issue.html_url;
       a.textContent = issue.title;
@@ -220,12 +223,13 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
       tag.classList.add("tag");
       if (status) {
         tag.style.backgroundColor = color;
-        tag.textContent = status;
       } else {
-        tag.classList.add("unknown");
-        tag.textContent = "???";
+        status = 'needupdate'
       }
+      tag.classList.add(status);
+      tag.textContent = status;
       tags.appendChild(tag);
+      div.classList.add(status);
 
       // do all the non-status, non-date labels too
       for (var k = 0; k < labels.length; k++) {

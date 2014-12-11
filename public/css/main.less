@@ -25,10 +25,18 @@ footer {
   line-height: 45px;
 }
 
-li.issue {
+.issue {
   list-style: none;
-  padding-left: 2em;
   margin-left: 0;
+  padding: 1ex;
+  padding-left: 3em;
+}
+
+.issue.BLOCKED {
+  background: rgba(240,0,0,.1);
+}
+.issue.needupdate {
+  opacity: 0.8; /* subtle mute of initiatives w/ no reported status */
 }
 
 .prioritygroup:before {
@@ -172,7 +180,7 @@ li h5 {
   margin-right: .5em;
 }
 
-.tag.unknown {
+.tag.needupdate {
   background-color: orange;
 }
 
