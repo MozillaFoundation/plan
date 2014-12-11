@@ -26,6 +26,32 @@ function issuePriority(issue) {
   return 100;
 }
 
+function getQueryStringValue (key) {  
+  return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
+}  
+
+function showIssuesBasedOnQueryString() {
+  var sprintEndDate = moment().day(5);
+  if (sprintEndDate.week() % 2 == 1) { // this may need to be tweaked yearly
+    sprintEndDate = sprintEndDate.add(7, 'days');
+  }
+  console.log(document.location.pathname)
+  if (document.location.pathname == '/next') {
+    sprintEndDate = sprintEndDate.add(14, 'days');
+    // Special cases for special dates
+    console.log(sprintEndDate.format('YYYY-MM-DD'))
+    if (sprintEndDate.isSame(moment("2014-12-26"), 'day')) {
+      sprintEndDate = moment("2014-12-24")
+    }
+  }
+  label = sprintEndDate.format('MMMDD').toLowerCase();
+  console.log("label", label);
+  console.log(sprintEndDate);
+  deadline = sprintEndDate.format("MMM Do")
+  console.log("deadline: ", deadline)
+  populateIssues('#issues', label, '#deadline', 'by '+ deadline);
+}
+
 function populateIssues(elementid, label, deadlineid, deadlinelabel) {
   emoji.use_sheet = true;
   var deadline = document.querySelector(deadlineid);
@@ -184,11 +210,4 @@ $(document).ready(function() {
       commandKeyDown = [224, 17, 91, 93].indexOf(e.keyCode) > -1;
     };
   });
-
-  if (document.location.pathname == '/') {
-    // XXX: move this to some configuration file somewhere easier to find.
-    // XXX: make the org + repo also easier to configure in one location.
-    populateIssues('#issues-now', 'dec12', '#deadline-now', '(by Dec 12th)');
-    populateIssues('#issues-next', 'dec24', '#deadline-next', '(by Dec 24th)');
-  };
 });
