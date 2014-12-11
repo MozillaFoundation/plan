@@ -64,8 +64,6 @@ function recordRole(ownernick, role, issue) {
     people[ownernick] = [];
   }
   for (var i=0; i<people[ownernick].length;i++) {
-    console.log(people[ownernick][i][0], role);
-    console.log(people[ownernick][i][1].id, issue.id);
     if ((people[ownernick][i][0] == role) && (people[ownernick][i][1].id == issue.id)) {
       return; // often owner is indicated both in assignment and in the description
     }
