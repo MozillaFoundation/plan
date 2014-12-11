@@ -27,6 +27,36 @@ var Y = require('yui/yql');
 var _ = require('lodash');
 
 
+exports.getUser = function(req, res) {
+  var url = "https://api.github.com/users/" + req.query.username
+  var token;
+  if (req.user && req.user.tokens && req.user.tokens[0].accessToken) {
+    // if logged in, we'll skip any rate limiting by using the user's token
+    token = req.user.tokens[0].accessToken;
+  } else {
+    // we'll use a token davidascher made to also avoid rate limiting
+    token = secrets.github.token;
+  }
+  url += "?access_token="+encodeURIComponent(token);
+  var options = {
+      url: url,
+      headers: {
+          'User-Agent': 'NodeJS HTTP Client'
+      }
+  };
+  request.get(options, function(err, ret, body) {
+    if (err) {
+      console.log(err);
+      res.status('500').json(err);
+    } else {
+      if (ret.statusCode >= 400) {
+        res.status(ret.statusCode).json(body);
+      } else {
+        res.status('200').json(body);
+      }
+    }
+  });
+}
 
 exports.getIssues = function(req, res) {
   var url = "https://api.github.com/repos/" + githubconfig.github_org + '/' + githubconfig.github_repo + "/issues"

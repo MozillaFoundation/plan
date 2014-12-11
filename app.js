@@ -25,7 +25,7 @@ var connectAssets = require('connect-assets');
  * Controllers (route handlers).
  */
 
-var homeController = require('./controllers/home');
+var simpleController = require('./controllers/simple');
 var userController = require('./controllers/user');
 var apiController = require('./controllers/api');
 var intakeController = require('./controllers/intake');
@@ -120,7 +120,11 @@ app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }))
  * Main routes.
  */
 
-app.get('/', homeController.index);
+app.get('/', simpleController.index);
+app.get('/now', simpleController.now);
+app.get('/next', simpleController.next);
+app.get('/who', simpleController.who);
+
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
@@ -132,6 +136,7 @@ app.get('/account', passportConf.isAuthenticated, userController.getAccount);
 app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
 
 app.get('/api/issues', apiController.getIssues)
+app.get('/api/user', apiController.getUser)
 
 app.get('/auth/github', passport.authenticate('github', {scope: 'user,repo,public_repo'}));
 app.get('/auth/github/callback', passport.authenticate('github', {scope: 'user,repo,public_repo', failureRedirect: '/login' }), function(req, res) {

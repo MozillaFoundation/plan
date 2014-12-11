@@ -5,16 +5,42 @@ html
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
     meta(name='viewport', content='width=device-width, initial-scale=1.0')
     meta(name='csrf-token', content=_csrf)
-    title intake.webmaker - #{title}
+    title #{title}
     script(src="/js/emoji.js")
+    script(src="/js/moment.js")
     != css('main')
   body
     include partials/navbar
 
-    .container
-      include partials/flash
-      block content
+    .container-fluid
+      .row
+        .col-md-2.sidebarcol
+          div.sidebar
+            ul
+              li(class=title=='home'?'active intake':'intake')
+                a(href='/')
+                  span build.
+                  img(src="/smalllogo.png",style="display:inline; padding-right: .5em;")
+              li(class=title=='intake'?'active intake':'intake')
+                a(href='/intake') NEW
+              li(class=title=='Now'?'active now':'now')
+                a(href='/now') NOW
+              li(class=title=='Next'?'active now':'next')
+                a(href='/now') NEXT
+              li(class=title=='Year'?'active year':'year')
+                a(href='https://waffle.io/mozillafoundation/plan') YEAR
+              li(class=title=='Plan'?'active plan':'plan')
+                a(href='https://wiki.mozilla.org/Webmaker/2015') 2015 PLAN
+              li(class=title=='Who'?'active who':'who')
+                a(href='/who') WHO
+              li(class=title=='Design'?'active design':'design')
+                a(href='/design') DESIGN
+              li(class=title=='Tools'?'active tools':'tools')
+                a(href='/tools') TOOLS
+        .col-md-8
+          include partials/flash
+          block content
+          include partials/footer
 
-    include partials/footer
 
     != js('application')

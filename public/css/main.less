@@ -13,8 +13,8 @@ html {
 }
 
 body {
-  padding-top: 60px;
-  margin-bottom: 75px;
+  /*padding-top: 60px;*/
+  /*margin-bottom: 75px;*/
 }
 
 footer {
@@ -56,6 +56,58 @@ footer {
 
 .prioritygroup.p2:before {
   content: "P2";
+}
+
+.login {
+  position: fixed;
+  top: 15px;
+  right: 2em;
+  font-variant: small-caps;
+}
+
+.login li {
+  list-style: none;
+}
+
+.navbar-default {
+  border: none;
+  /*background-color: #ff6985;*/
+  opacity: .8;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.sidebarcol {
+  padding:0;
+}
+.sidebar {
+  position:fixed;
+}
+
+.sidebar ul {
+  padding-left: 0;
+}
+
+.sidebar li {
+  list-style: none;
+  font-size: x-large;
+  width: 100%;
+  padding: .5em;
+  opacity: .8;
+  /*background-color: #ff6985;*/
+}
+
+.sidebar li.active {
+  font-weight: bold;
+}
+
+.sidebar li a {
+  color: black;
+}
+.sidebar li a:hover {
+  opacity: 1;
+  text-decoration: none;
+  color: red;
 }
 
 span.placeholderavatar {
@@ -163,4 +215,25 @@ li h5 {
 .fa,
 [class^="ion-"] {
   margin-right: 5px;
+}
+
+li.person {
+  display: block;
+  list-style: none;
+  clear: both;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+
+li.person .avatar {
+  margin-bottom: 1em;
+}
+
+.roles {
+  padding-left: 3em;
+}
+
+.footer {
+  margin-top: 6em;
+  border-top: 1px solid rgba(0,0,0,.1);
 }

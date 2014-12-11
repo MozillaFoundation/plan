@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  h2 Next Up
+    a.deadline#deadline
+  p What we're planning for the next sprint
+  div#issues
+  h2 Backlog
+  p We have a 
+    a(href="https://waffle.io/mozillafoundation/plan") calendar view 
+    span as well as a list of 
+    a(href="https://github.com/MozillaFoundation/plan/issues?q=is%3Aopen+is%3Aissue+no%3Alabel") unscheduled projects.
+  script.
+    document.addEventListener("DOMContentLoaded", function(event) {
+      showIssuesBasedOnQueryString()
+    });
