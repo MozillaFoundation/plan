@@ -82,6 +82,7 @@ footer {
 }
 .sidebar {
   position:fixed;
+  float: left;
 }
 
 .sidebar ul {
@@ -93,8 +94,13 @@ footer {
   font-size: x-large;
   width: 100%;
   padding: .5em;
+  padding-left: 0;
   opacity: .8;
   /*background-color: #ff6985;*/
+}
+
+.sidebar li.small {
+  font-size: medium;
 }
 
 .sidebar li.active {
@@ -233,7 +239,10 @@ li.person .avatar {
   padding-left: 3em;
 }
 
+
 .footer {
-  margin-top: 6em;
-  border-top: 1px solid rgba(0,0,0,.1);
+  clear:both;
+  position: fixed;
+  bottom: 1em;
+  right: 1em;
 }
