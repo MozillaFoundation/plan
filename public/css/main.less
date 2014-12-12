@@ -122,6 +122,45 @@ img.user {
   color: red;
 }
 
+div#heartbeat {
+  padding-top: 1em;
+  padding-bottom: 2em;
+}
+
+#timeleft {
+  font-style: italic;
+}
+
+.week {
+  display: inline-block;
+}
+
+.day {
+  display: inline-block;
+  text-align: center;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-size: smaller;
+  width: 4em;
+  border: 1px solid rgba(0,0,0,.3);
+  background-color: rgba(90, 99, 206, 0.9);
+  color: white;
+}
+
+.day.weekend {
+  background-color: rgba(200,100,200,.2);
+  color: black;
+}
+.day.past {
+  opacity: .5;
+}
+.day.today {
+  background-color: #111893;
+  color: white;
+  border: 3px solid black;
+  border-radius: 3px;
+}
+
 span.placeholderavatar {
   width: 32px;
   height: 32px;
