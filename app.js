@@ -108,7 +108,7 @@ app.use(function(req, res, next) {
   // Remember original destination before login.
   var path = req.path.split('/')[1];
   // this next bit is totally weird.
-  if (/auth|login|logout|signup|fonts|smalllogo.png|api|favicon/i.test(path)) {
+  if (/auth|login|logout|signup|fonts|smalllogo.png|api|now|next|design|tools|favicon/i.test(path)) {
     return next();
   }
   req.session.returnTo = req.path;
