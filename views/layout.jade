@@ -8,6 +8,7 @@ html
     title #{title}
     script(src="/js/emoji.js")
     script(src="/js/moment.js")
+    script(src="/js/EEG.js")
     != css('main')
   body
     include partials/navbar
@@ -41,7 +42,6 @@ html
               a(href='/design') DESIGN
             li(class=title=='Tools'?'active tools':'tools')
               a(href='/tools') TOOLS
-
             li.small
               a(href='https://github.com/MozillaFoundation/plan') 
                 i.fa.fa-github

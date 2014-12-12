@@ -30,7 +30,7 @@ function getQueryStringValue (key) {
   return unescape(window.location.search.replace(new RegExp("^(?:.*[&\\?]" + escape(key).replace(/[\.\+\*]/g, "\\$&") + "(?:\\=([^&]*))?)?.*$", "i"), "$1"));  
 }  
 
-function showIssuesBasedOnQueryString() {
+function getSprintEndDate() {
   var sprintEndDate = moment().day(5);
   if (sprintEndDate.week() % 2 == 1) { // this may need to be tweaked yearly
     sprintEndDate = sprintEndDate.add(7, 'days');
@@ -42,9 +42,14 @@ function showIssuesBasedOnQueryString() {
       sprintEndDate = moment("2014-12-24")
     }
   }
+  return sprintEndDate;
+}
+
+function showIssuesBasedOnQueryString() {
+  var sprintEndDate = getSprintEndDate();
   label = sprintEndDate.format('MMMDD').toLowerCase();
   deadline = sprintEndDate.format("MMM Do")
-  populateIssues('#issues', label, '#deadline', 'by '+ deadline);
+  populateIssues('#issues', label, '#deadline', 'deadline: end of '+ deadline);
 }
 
 var people = {}
@@ -268,7 +273,7 @@ function populateIssues(elementid, label, deadlineid, deadlinelabel) {
         ul.appendChild(div);
       }
     }
-    // layoutPeopleRoles();
+    layoutPeopleRoles();
   });
 }
 
