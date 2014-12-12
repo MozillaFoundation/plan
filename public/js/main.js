@@ -118,6 +118,7 @@ function placeAvatar(name, cb) {
 }
 
 function layoutPeopleRoles() {
+  return; // not ready
   var ul = document.querySelector('#roles');
 
   for (var name in people) { 
