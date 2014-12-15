@@ -2,11 +2,22 @@
 function EEG(id) {
   var sprintEndDate = getSprintEndDate();
   var today = moment();
-  var delta = sprintEndDate.dayOfYear()-today.dayOfYear();
-  var index = 12 - delta // (because the first monday is 12 days before the last friday
-  for (var i = 0; i < index-1; i++) {
-    document.getElementById('day'+Number(i+1)).classList.add('past');
+  // var index = 12 - delta // (because the first monday is 12 days before the last friday
+  var day = moment();
+  for (var i = 0; i < 14; i++) {
+    var daynode = document.getElementById('day'+Number(i+1));
+    if (day.isSame(today, 'day')) {
+      document.getElementById('day'+Number(i+1)).classList.add('today');
+    } else if (day.isBefore(today, 'day')) {
+      document.getElementById('day'+Number(i+1)).classList.add('past');
+    } 
+    console.log(daynode.id, day.format());
+    if (day.isSame(moment("2014-12-25"), 'day') || 
+        day.isSame(moment("2014-12-26"), 'day')) {
+      daynode.classList.add('holiday');
+    }
+    daynode.innerHTML = "<div>"+daynode.textContent+"</div><div>" + ' ' + day.format('MMM D') + "</div>"
+    day.add(1, 'day');
   }
-  document.getElementById('day'+Number(index)).classList.add('today');
-  document.getElementById('timeleft').textContent = (delta+1) + " " + (delta+1 == 1 ? "work day" : "work days") +" left in the heartbeat."
+  // document.getElementById('timeleft').textContent = (delta+1) + " " + (delta+1 == 1 ? "work day" : "work days") +" left in the heartbeat."
 }

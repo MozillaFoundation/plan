@@ -34,6 +34,9 @@ function getSprintEndDate() {
   var sprintEndDate = moment().day(5);
   if (sprintEndDate.week() % 2 == 1) { // this may need to be tweaked yearly
     sprintEndDate = sprintEndDate.add(7, 'days');
+    if (sprintEndDate.isSame(moment("2014-12-26"), 'day')) {
+      sprintEndDate = moment("2014-12-24")
+    }
   }
   if (document.location.pathname == '/next') {
     sprintEndDate = sprintEndDate.add(14, 'days');
