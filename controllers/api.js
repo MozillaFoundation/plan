@@ -28,6 +28,7 @@ var _ = require('lodash');
 
 
 exports.getUser = function(req, res) {
+  console.log("GETTING DATA FOR USER", req.query.username)
   var url = "https://api.github.com/users/" + req.query.username
   var token;
   if (req.user && req.user.tokens && req.user.tokens[0].accessToken) {

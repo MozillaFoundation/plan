@@ -54,11 +54,21 @@ exports.design = function(req, res) {
 };
 
 /**
- * GET /who
+ * GET /tools
  * Who page.
  */
 exports.tools = function(req, res) {
   res.render('tools', {
     title: 'Tools',
+  });
+};
+
+/**
+ * GET /mentions
+ * Who page.
+ */
+exports.mentions = function(req, res) {
+  res.render('mentions', {
+    title: 'Mentions',
   });
 };

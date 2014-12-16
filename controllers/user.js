@@ -12,7 +12,8 @@ var secrets = require('../config/secrets');
  */
 
 exports.getLogin = function(req, res) {
-  if (req.user) return res.redirect('/');
+  // if (req.user) return res.redirect('/');
+  if (req.user) return res.redirect(req.session.returnTo || '/');
   res.render('account/login', {
     title: 'Login'
   });

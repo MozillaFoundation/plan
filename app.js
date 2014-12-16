@@ -104,17 +104,19 @@ app.use(function(req, res, next) {
   res.locals.user = req.user;
   next();
 });
+
+app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
+
 app.use(function(req, res, next) {
   // Remember original destination before login.
   var path = req.path.split('/')[1];
-  // this next bit is totally weird.
-  if (/auth|login|logout|signup|fonts|smalllogo.png|api|now|next|design|tools|favicon/i.test(path)) {
+  // this next bit is totally weird, needs documentation
+  if (/auth|login|logout|signup|fonts|smalllogo.png|api|now|next|design|tools|mentions|favicon/i.test(path)) {
     return next();
   }
   req.session.returnTo = req.path;
   next();
 });
-app.use(express.static(path.join(__dirname, 'public'), { maxAge: 31557600000 }));
 
 /**
  * Main routes.
@@ -126,6 +128,7 @@ app.get('/next', simpleController.next);
 app.get('/who', simpleController.who);
 app.get('/design', simpleController.design);
 app.get('/tools', simpleController.tools);
+app.get('/mentions', simpleController.mentions);
 
 app.get('/login', userController.getLogin);
 app.post('/login', userController.postLogin);
