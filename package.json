@@ -60,11 +60,8 @@
     "yui": "^3.18.1"
   },
   "devDependencies": {
-    "blessed": "^0.0.37",
     "chai": "^1.10.0",
-    "github": "^0.2.3",
     "mocha": "^2.0.1",
-    "multiline": "^1.0.1",
     "supertest": "^0.15.0"
   }
 }
