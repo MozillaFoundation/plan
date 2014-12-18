@@ -20,7 +20,7 @@ npm install
 * `PLAN_GITHUB_TOKEN` is optional but will help avoid rate limiting, and is a Personal Access Token generated on the same page.
 
 #### Run
-Before attempting to start the server, make sure that you have [MongoDB](http://www.mongodb.org/) installed and running. If you have [nodemon](https://github.com/remy/nodemon) installed, you can start the server by running:
+If you have [nodemon](https://github.com/remy/nodemon) installed, you can start the server by running:
 
 ```bash
 nodemon app.js
