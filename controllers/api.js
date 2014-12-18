@@ -10,8 +10,8 @@ var clientID = secrets.github.clientID;
 var clientSecret = secrets.github.clientSecret;
 
 exports.getUser = function(req, res) {
-  console.log("GETTING DATA FOR USER", req.query.username)
-  var url = "https://api.github.com/users/" + req.query.username
+  console.log('GETTING DATA FOR USER', req.query.username)
+  var url = 'https://api.github.com/users/' + req.query.username
   var token;
   if (req.user && req.user.tokens && req.user.tokens[0].accessToken) {
     // if logged in, we'll skip any rate limiting by using the user's token
@@ -20,7 +20,7 @@ exports.getUser = function(req, res) {
     // we'll use a token davidascher made to also avoid rate limiting
     token = secrets.github.token;
   }
-  url += "?access_token="+encodeURIComponent(token);
+  url += '?access_token=' + encodeURIComponent(token);
   var options = {
       url: url,
       headers: {
@@ -42,9 +42,12 @@ exports.getUser = function(req, res) {
 }
 
 exports.getIssues = function(req, res) {
-  var url = "https://api.github.com/repos/" + githubconfig.github_org + '/' + githubconfig.github_repo + "/issues"
-  url += "?client_id="+encodeURIComponent(clientID)+"&client_secret="+encodeURIComponent(clientID);
-  url += "&labels="+encodeURIComponent(req.query.labels);
+  var url = 'https://api.github.com/repos/' + githubconfig.github_org +
+    '/' + githubconfig.github_repo + '/issues' +
+    '?client_id=' + encodeURIComponent(clientID) +
+    '&client_secret=' + encodeURIComponent(clientID) +
+    '&labels=' + encodeURIComponent(req.query.labels);
+
   var token;
   if (req.user && req.user.tokens && req.user.tokens[0].accessToken) {
     // if logged in, we'll skip any rate limiting by using the user's token
@@ -53,7 +56,7 @@ exports.getIssues = function(req, res) {
     // we'll use a token davidascher made to also avoid rate limiting
     token = secrets.github.token;
   }
-  url += "&access_token="+encodeURIComponent(token);
+  url += '&access_token=' + encodeURIComponent(token);
   var options = {
       url: url,
       headers: {
@@ -74,4 +77,3 @@ exports.getIssues = function(req, res) {
     }
   });
 }
-

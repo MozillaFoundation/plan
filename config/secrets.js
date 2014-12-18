@@ -1,7 +1,8 @@
-var habitat = require('habitat');
-habitat.load('.env');
-habitat.load('config/production.env');
-var env = new habitat('plan');
+var Habitat = require('habitat');
+Habitat.load('.env');
+Habitat.load('config/production.env');
+
+var env = new Habitat('plan');
 
 module.exports = {
   sessionSecret: process.env.SESSION_SECRET || env.get('session_secret'),
@@ -15,4 +16,3 @@ module.exports = {
     passReqToCallback: true
   }
 };
-

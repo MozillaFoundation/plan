@@ -2,7 +2,7 @@
  * GET /login
  * Login page.
  */
-exports.getLogin = function (req, res) {
+exports.getLogin = function(req, res) {
   if (req.session.token) return res.redirect('/');
 
   res.render('account/login', {
@@ -14,7 +14,7 @@ exports.getLogin = function (req, res) {
  * GET /logout
  * Log out.
  */
-exports.logout = function (req, res) {
+exports.logout = function(req, res) {
   req.session.token = null;
   res.redirect('/');
 };

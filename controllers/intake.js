@@ -40,7 +40,7 @@ var raci = '\n\n' +
   '* Development Lead: \n' +
   '* Quality Verifier: \n';
 
-exports.postIntake = function (req, res) {
+exports.postIntake = function(req, res) {
 
   req.assert('audience', 'You have to specify an audience.').notEmpty();
   req.assert('problem', 'We can\'t solve a problem we don\'t understand.').notEmpty();
@@ -74,8 +74,9 @@ exports.postIntake = function (req, res) {
     '## Preparation Checklist\n' + checklist + '\n\n' +
     '## RACI\n' + raci;
 
-  var url = "https://api.github.com/repos/" + githubconfig.github_org + '/' + githubconfig.github_repo + "/issues";
-  url += "?access_token=" + encodeURIComponent(req.session.token);
+  var url = 'https://api.github.com/repos/' + githubconfig.github_org +
+    '/' + githubconfig.github_repo + '/issues' +
+    '?access_token=' + encodeURIComponent(req.session.token);
 
   var options = {
       url: url,
@@ -85,16 +86,16 @@ exports.postIntake = function (req, res) {
       body: JSON.stringify({
         title: problem,
         body: body
-      }),
+      })
   };
 
-  request.post(options, function (err, ret, body) {
+  request.post(options, function(err, ret, body) {
     if (err) {
       req.flash('errors', err);
       return res.redirect('/intake');
     } else {
       if (ret.statusCode >= 400) {
-        req.flash('errors', {'msg': JSON.parse(body).message});
+        req.flash('errors', {msg: JSON.parse(body).message});
         return res.redirect('/');
       }
       return res.redirect(JSON.parse(body).html_url);

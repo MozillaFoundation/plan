@@ -11,7 +11,7 @@ var secrets = require('../config/secrets');
 /**
  * Constructor
  */
-function Github (client, secret) {
+function Github(client, secret) {
   var _this = this;
 
   _this.client = client;
@@ -21,20 +21,20 @@ function Github (client, secret) {
   /**
    * Express middleware adapter. Attaches user information to the request if an
    * auth token exists within the session object.
-   * 
+   *
    * @param  {object}   req  Request
    * @param  {object}   res  Response
    * @param  {Function} next Callback
    */
-  _this.middleware = function (req, res, next) {
+  _this.middleware = function(req, res, next) {
     // If no token exists in the session, continue
-    if (typeof req.session.token === 'undefined' || req.session.token === null) {
+    if (!req.session.token) {
       res.locals.user = null;
       return next();
     }
-    
+
     // If token exists, fetch user from Github API & continue
-    _this.getUserFromToken(req.session.token, function (err, user) {
+    _this.getUserFromToken(req.session.token, function(err, user) {
       // Handle error state(s)
       if (err) {
         req.session.token = null;
@@ -55,7 +55,7 @@ function Github (client, secret) {
  * @param  {string}   token    OAuth token provided by Github
  * @param  {Function} callback
  */
-Github.prototype.getUserFromToken = function (token, callback) {
+Github.prototype.getUserFromToken = function(token, callback) {
   var _this = this;
 
   request({
@@ -63,11 +63,11 @@ Github.prototype.getUserFromToken = function (token, callback) {
     uri: _this.host + '/user',
     headers: {
       'User-Agent': 'build.webmaker.org',
-      'Accept': 'application/vnd.github.v3+json',
-      'Authorization': 'token ' + token
+      Accept: 'application/vnd.github.v3+json',
+      Authorization: 'token ' + token
     },
     json: {}
-  }, function (err, res, body) {
+  }, function(err, res, body) {
     callback(err, body);
   });
 };

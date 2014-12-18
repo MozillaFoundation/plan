@@ -6,9 +6,5 @@
   ],
 
   "requireMultipleVarDecl": null,
-  "maximumLineLength": {
-    "value": 80,
-    "allowComments": true,
-    "allowRegex": true
-  }
+  "requireCamelCaseOrUpperCaseIdentifiers": null
 }
