@@ -34,6 +34,24 @@ var intakeController = require('./controllers/intake');
 var secrets = require('./config/secrets');
 
 /**
+ * Github handlers
+ */
+var Github = require('./models/github');
+var github = new Github(
+  secrets.github.clientID,
+  secrets.github.clientSecret
+);
+
+var oauth = require('github-oauth')({
+  githubClient: secrets.github.clientID,
+  githubSecret: secrets.github.clientSecret,
+  baseURL: secrets.github.host,
+  callbackURI: secrets.github.callbackURL,
+  loginURI: '/login',
+  scope: 'user,repo,public_repo'
+});
+
+/**
  * Create Express server.
  */
 var app = express();
@@ -65,18 +83,7 @@ app.use(expressValidator());
 app.use(lusca.csrf());
 app.use(cookieParser());
 app.use(flash());
-
-/**
- * OAuth handler
- */
-var oauth = require('github-oauth')({
-  githubClient: secrets.github.clientID,
-  githubSecret: secrets.github.clientSecret,
-  baseURL: 'http://localhost:3000',
-  loginURI: '/login',
-  callbackURI: secrets.github.callbackURL,
-  scope: 'user,repo,public_repo'
-});
+app.use(github.middleware);
 
 /**
  * CORS
@@ -86,23 +93,6 @@ app.use(function(req, res, next) {
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
-
-app.use(function(req, res, next) {
-  // Make user object available in templates.
-  res.locals.user = req.user;
-  next();
-});
-
-// app.use(function(req, res, next) {
-//   // Remember original destination before login.
-//   var path = req.path.split('/')[1];
-//   // this next bit is totally weird, needs documentation
-//   if (/auth|login|logout|signup|fonts|smalllogo.png|api|now|next|design|tools|mentions|favicon/i.test(path)) {
-//     return next();
-//   }
-//   req.session.returnTo = req.path;
-//   next();
-// });
 
 /**
  * Main routes.
@@ -116,14 +106,14 @@ app.get('/tools', simpleController.tools);
 app.get('/mentions', simpleController.mentions);
 
 app.get('/login', userController.getLogin);
-app.post('/login', userController.postLogin);
 app.get('/logout', userController.logout);
 
-// app.get('/intake', passportConf.isAuthenticated, intakeController.getIntake);
-// app.post('/intake', intakeController.postIntake);
-// app.get('/account', passportConf.isAuthenticated, userController.getAccount);
-
-// app.post('/account/delete', passportConf.isAuthenticated, userController.postDeleteAccount);
+app.get('/intake', function (req, res, next) {
+  if (req.session.token) return next();
+  req.flash('errors', {msg: 'You must be signed-in to add a project.'});
+  next();
+}, intakeController.getIntake);
+app.post('/intake', intakeController.postIntake);
 
 app.get('/api/issues', apiController.getIssues)
 app.get('/api/user', apiController.getUser)

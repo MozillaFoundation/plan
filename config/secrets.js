@@ -10,6 +10,7 @@ module.exports = {
     clientID: env.get('GITHUB_CLIENTID'),
     clientSecret: env.get('GITHUB_CLIENTSECRET'),
     token: env.get('GITHUB_TOKEN'),
+    host: env.get('GITHUB_HOST') || 'https://build.webmaker.org',
     callbackURL: '/auth/github/callback',
     passReqToCallback: true
   }

@@ -1,6 +1,7 @@
-var githubconfig = require('../config/github');
 var request = require('request');
 var _ = require('lodash');
+
+var githubconfig = require('../config/github');
 var secrets = require('../config/secrets');
 
 /**
@@ -39,7 +40,7 @@ var raci = '\n\n' +
   '* Development Lead: \n' +
   '* Quality Verifier: \n';
 
-exports.postIntake = function(req, res) {
+exports.postIntake = function (req, res) {
 
   req.assert('audience', 'You have to specify an audience.').notEmpty();
   req.assert('problem', 'We can\'t solve a problem we don\'t understand.').notEmpty();
@@ -61,7 +62,7 @@ exports.postIntake = function(req, res) {
   var vision = req.body.vision;
   var mvp = req.body.mvp;
   var risks = req.body.risks;
-  var name = req.user.profile.name;
+  var name = res.locals.user.login;
 
   var body = '' +
     '## Problem\n' + problem + '\n\n' +
@@ -74,25 +75,20 @@ exports.postIntake = function(req, res) {
     '## RACI\n' + raci;
 
   var url = "https://api.github.com/repos/" + githubconfig.github_org + '/' + githubconfig.github_repo + "/issues";
-  var token = secrets.github.token;
-  if (req.user && req.user.tokens && req.user.tokens[0].accessToken) {
-    // we have to be logged in, so we'll skip any rate limiting.
-    var accessToken = req.user.tokens[0].accessToken;
-    url += "?access_token="+encodeURIComponent(accessToken);
-  } else {
-    return; // shouldn't endup here anyway as we should be logged in.
-  }
+  url += "?access_token=" + encodeURIComponent(req.session.token);
+
   var options = {
       url: url,
       headers: {
-          'User-Agent': 'NodeJS HTTP Client'
+        'User-Agent': 'NodeJS HTTP Client'
       },
       body: JSON.stringify({
         title: problem,
         body: body
       }),
   };
-  request.post(options, function(err, ret, body) {
+
+  request.post(options, function (err, ret, body) {
     if (err) {
       req.flash('errors', err);
       return res.redirect('/intake');

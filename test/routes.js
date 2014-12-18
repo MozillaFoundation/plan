@@ -9,7 +9,31 @@ describe('GET /', function() {
   });
 });
 
+describe('GET /intake', function() {
+  it('should return 200 OK', function(done) {
+    request(app)
+      .get('/login')
+      .expect(200, done);
+  });
+});
+
+describe('GET /now', function() {
+  it('should return 200 OK', function(done) {
+    request(app)
+      .get('/login')
+      .expect(200, done);
+  });
+});
+
 describe('GET /login', function() {
+  it('should return 200 OK', function(done) {
+    request(app)
+      .get('/login')
+      .expect(200, done);
+  });
+});
+
+describe('GET /logout', function() {
   it('should return 200 OK', function(done) {
     request(app)
       .get('/login')
