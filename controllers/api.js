@@ -3,7 +3,6 @@ var githubconfig = require('../config/github');
 var User = require('../models/User');
 var querystring = require('querystring');
 var validator = require('validator');
-var async = require('async');
 var request = require('request');
 var GitHubApi = require('github');
 var github = new GitHubApi({
