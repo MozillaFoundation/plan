@@ -5,8 +5,7 @@ var querystring = require('querystring');
 var validator = require('validator');
 var async = require('async');
 var request = require('request');
-var Github = require('github-api');
-var GitHubApi = require("github");
+var GitHubApi = require('github');
 var github = new GitHubApi({
     // required
     version: "3.0.0",
@@ -17,12 +16,11 @@ var clientID = secrets.github.clientID;
 var clientSecret = secrets.github.clientSecret;
 
 github.authenticate({
-    type: "oauth",
+    type: 'oauth',
     key: clientID,
     secret: clientSecret
 })
 
-var Twit = require('twit');
 var Y = require('yui/yql');
 var _ = require('lodash');
 
