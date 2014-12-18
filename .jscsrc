@@ -1,0 +1,10 @@
+{
+  "preset": "airbnb",
+  
+  "excludeFiles": [
+    "node_modules/**"
+  ],
+
+  "requireMultipleVarDecl": null,
+  "requireCamelCaseOrUpperCaseIdentifiers": null
+}

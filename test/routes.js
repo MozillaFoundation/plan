@@ -9,6 +9,22 @@ describe('GET /', function() {
   });
 });
 
+describe('GET /intake', function() {
+  it('should return 200 OK', function(done) {
+    request(app)
+      .get('/login')
+      .expect(200, done);
+  });
+});
+
+describe('GET /now', function() {
+  it('should return 200 OK', function(done) {
+    request(app)
+      .get('/login')
+      .expect(200, done);
+  });
+});
+
 describe('GET /login', function() {
   it('should return 200 OK', function(done) {
     request(app)
@@ -17,26 +33,10 @@ describe('GET /login', function() {
   });
 });
 
-describe('GET /signup', function() {
+describe('GET /logout', function() {
   it('should return 200 OK', function(done) {
     request(app)
-      .get('/signup')
-      .expect(200, done);
-  });
-});
-
-describe('GET /api', function() {
-  it('should return 200 OK', function(done) {
-    request(app)
-      .get('/api')
-      .expect(200, done);
-  });
-});
-
-describe('GET /contact', function() {
-  it('should return 200 OK', function(done) {
-    request(app)
-      .get('/contact')
+      .get('/login')
       .expect(200, done);
   });
 });

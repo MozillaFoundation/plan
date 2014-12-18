@@ -5,18 +5,10 @@
   else
     li.dropdown(class=title=='Account Management'?'active':undefined)
       a.dropdown-toggle(href='#', data-toggle='dropdown')
-        if user.profile.picture
-          img.user(src='#{user.profile.picture}')
-        else
-          img.user(src='#{user.gravatar(60)}')
-        | #{user.profile.name || user.email || user.id}&nbsp;
+        img.user(src='#{user.avatar_url}')
+        | #{user.name || user.login}&nbsp;
         i.caret
       ul.dropdown-menu
-        li
-          a(href='/account')
-            span.ion-person
-            | My Account
-        li.divider
         li
           a(href='/logout')
             span.ion-log-out

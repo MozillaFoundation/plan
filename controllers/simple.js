@@ -2,7 +2,6 @@
  * GET /
  * Home page.
  */
-
 exports.index = function(req, res) {
   res.render('home', {
     title: 'Home'
@@ -21,17 +20,15 @@ exports.now = function(req, res) {
   });
 };
 
-
 /**
  * GET /next
  * Next page.
  */
 exports.next = function(req, res) {
   res.render('next', {
-    title: 'Next',
+    title: 'Next'
   });
 };
-
 
 /**
  * GET /who
@@ -39,7 +36,7 @@ exports.next = function(req, res) {
  */
 exports.who = function(req, res) {
   res.render('who', {
-    title: 'Who',
+    title: 'Who'
   });
 };
 
@@ -49,7 +46,7 @@ exports.who = function(req, res) {
  */
 exports.design = function(req, res) {
   res.render('design', {
-    title: 'Design',
+    title: 'Design'
   });
 };
 
@@ -59,7 +56,7 @@ exports.design = function(req, res) {
  */
 exports.tools = function(req, res) {
   res.render('tools', {
-    title: 'Tools',
+    title: 'Tools'
   });
 };
 
@@ -69,6 +66,6 @@ exports.tools = function(req, res) {
  */
 exports.mentions = function(req, res) {
   res.render('mentions', {
-    title: 'Mentions',
+    title: 'Mentions'
   });
 };
