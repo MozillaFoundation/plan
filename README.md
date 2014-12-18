@@ -15,3 +15,7 @@ Edit .env to have real secrets:
 * `PLAN_GITHUB_TOKEN` is optional but will help avoid rate limiting, and is a Personal Access Token generated on the same page.
 
 I like to run the server using `nodemon app.js` (as it will do autoreload).  It runs by default on port `3000`, but you can add a `PORT` variable to `.env` to choose your own.
+
+nodemon can be installed globally in your environment like so:
+
+`npm install nodemon -g`
