@@ -24,7 +24,6 @@
     "express-flash": "~0.0.2",
     "express-session": "~1.9.1",
     "express-validator": "~2.7.0",
-    "github": "~0.2.3",
     "github-oauth": "~0.2.0",
     "habitat": "~3.1.0",
     "instagram-node": "~0.5.1",
@@ -39,7 +38,6 @@
     "request": "~2.48.0",
     "uglify-js": "~2.4.15",
     "validator": "~3.22.1",
-    "yui": "~3.18.1"
   },
   "devDependencies": {
     "chai": "~1.10.0",

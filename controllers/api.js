@@ -1,28 +1,13 @@
-var secrets = require('../config/secrets');
-var githubconfig = require('../config/github');
-var User = require('../models/User');
+var _ = require('lodash');
 var querystring = require('querystring');
 var validator = require('validator');
 var request = require('request');
-var GitHubApi = require('github');
-var github = new GitHubApi({
-    // required
-    version: "3.0.0",
-    debug: true
-});
+
+var secrets = require('../config/secrets');
+var githubconfig = require('../config/github');
 
 var clientID = secrets.github.clientID;
 var clientSecret = secrets.github.clientSecret;
-
-github.authenticate({
-    type: 'oauth',
-    key: clientID,
-    secret: clientSecret
-})
-
-var Y = require('yui/yql');
-var _ = require('lodash');
-
 
 exports.getUser = function(req, res) {
   console.log("GETTING DATA FOR USER", req.query.username)
