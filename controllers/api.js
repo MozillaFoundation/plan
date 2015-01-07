@@ -64,7 +64,6 @@ exports.getIssues = function(req, res) {
       }
   };
   request.get(options, function(err, ret, body) {
-    console.log(ret.statusCode);
     if (err) {
       console.log(err);
       res.status('500').json(err);

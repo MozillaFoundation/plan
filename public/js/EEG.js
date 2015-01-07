@@ -1,9 +1,10 @@
 // EEG.js -- indicate where we are in the hearbeat
 function EEG(id) {
   var sprintEndDate = getSprintEndDate();
+  var sprintStartDate = sprintEndDate.subtract(11, 'days');
   var today = moment();
   // var index = 12 - delta // (because the first monday is 12 days before the last friday
-  var day = moment();
+  var day = sprintStartDate;
   for (var i = 0; i < 14; i++) {
     var daynode = document.getElementById('day'+Number(i+1));
     if (day.isSame(today, 'day')) {
@@ -11,7 +12,6 @@ function EEG(id) {
     } else if (day.isBefore(today, 'day')) {
       document.getElementById('day'+Number(i+1)).classList.add('past');
     } 
-    console.log(daynode.id, day.format());
     if (day.isSame(moment("2014-12-25"), 'day') || 
         day.isSame(moment("2014-12-26"), 'day')) {
       daynode.classList.add('holiday');
