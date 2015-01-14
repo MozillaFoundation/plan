@@ -52,6 +52,32 @@ h2,h3,h4 {
   color: @navText;
   background-color: @navBackground;
   list-style: none;
+
+  ul {
+    list-style: none;
+  }
+
+  li {
+    margin: 16px 20px;
+    
+    font-size: 0.74em;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    font-kerning: normal;
+
+    a:link, a:hover, a:visited {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    a:hover {
+      color: inherit;
+    }
+
+    a:visited {
+      color: inherit;
+    }
+  }
 }
 
 // Wrapper
