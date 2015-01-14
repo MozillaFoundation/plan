@@ -18,9 +18,11 @@ body {
   margin: 0;
   padding: 0;
 
+  color: @black;
+  background-color: @background;
+
   font-family: 'Fira Sans', Helvetica, sans-serif;
   font-weight: 400;
-  background-color: @background;
 }
 
 h1 {
@@ -92,6 +94,10 @@ h2,h3,h4 {
 
   margin: 0;
   padding: 48px 60px;
+
+  h2,h3,h4 {
+    margin: 0;
+  }
 }
 
 //
@@ -104,7 +110,8 @@ h2,h3,h4 {
 label[for="nav-trigger"] {
   /* critical positioning styles */
   position: absolute;
-  left: 15px; top: 15px;
+  left: 20px; 
+  top: 20px;
   z-index: 2;
   
   /* non-critical apperance styles */
@@ -117,16 +124,31 @@ label[for="nav-trigger"] {
 
 /* Make the Magic Happen */
 .nav-trigger + label, .container {
-  transition: left 0.2s;
+  transition: left 0.15s;
 }
 
 .nav-trigger:checked + label {
-  left: 215px;
+  left: 210px;
 }
 
 .nav-trigger:checked ~ .container {
-  left: 200px;
-  box-shadow: 0 0 5px 5px rgba(0,0,0,0.5);
+  left: 190px;
+}
+
+// Responsive
+@media screen and (min-width: 958px) {
+  label[for="nav-trigger"] {
+    visibility: hidden;
+    left: 210px;
+  }
+
+  .container {
+    left: 190px;
+  }
+
+  .header {
+    background-color: red;
+  }
 }
 
 //
