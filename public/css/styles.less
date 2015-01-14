@@ -1,16 +1,8 @@
 @import "lib/normalize";
 @import "lib/fira";
 
-// Colors
-@highlight: #65C5AD;
-@black: #0A3931;
-@gray: #DDEDF2;
-@background: #F9FAFA;
-@white: #FFF;
-
-@navBackground: #32383F;
-@navText: #858F97;
-@navIcon: #404851;
+@import "colors";
+@import "icons";
 
 // Layout
 body {
@@ -58,20 +50,24 @@ h2,h3,h4 {
   }
 
   li {
-    margin: 16px 20px;
+    margin: 14px 16px;
+    padding: 2px 0px 0px 30px;
+
+    background-repeat: no-repeat;
+    background-position: top left;
     
     font-size: 0.74em;
     text-transform: uppercase;
     letter-spacing: 0.6px;
     font-kerning: normal;
 
-    a:link, a:hover, a:visited {
+    a:link {
       color: inherit;
       text-decoration: none;
     }
 
     a:hover {
-      color: inherit;
+      color: @highlight;
     }
 
     a:visited {
