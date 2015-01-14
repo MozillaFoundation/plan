@@ -1,0 +1,441 @@
+@import "lib/normalize";
+@import "lib/fira";
+
+// Colors
+@highlight: #65C5AD;
+@black: #0A3931;
+@gray: #DDEDF2;
+@background: #F9FAFA;
+@white: #FFF;
+
+@navBackground: #32383F;
+@navText: #858F97;
+@navIcon: #404851;
+
+// Layout
+body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+
+  font-family: 'Fira Sans', Helvetica, sans-serif;
+  font-weight: 400;
+  background-color: @background;
+}
+
+h1 {
+  font-weight: 200;
+}
+
+h2,h3,h4 {
+  font-weight: 300;
+}
+
+// Navigation
+.navigation {
+  display: block;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  z-index: 0;
+  margin: 0;
+  padding: 0;
+
+  color: @navText;
+  background-color: @navBackground;
+  list-style: none;
+}
+
+// Wrapper
+.container {
+  display: block;
+  position: relative;
+  min-width: 100%;
+  min-height: 100%;
+
+  top: 0;
+  bottom: 100%;
+  left: 0;
+
+  z-index: 1;
+  margin: -20px 0 0 0;
+  padding: 0;
+
+  background-color: @background;
+}
+
+.header {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 62px;
+
+  color: @white;
+  background-color: @highlight;
+
+  h2 {
+    line-height: 62px;
+    margin-left: 60px;
+  }
+}
+
+.main {
+  display: block;
+  position: relative;
+  width: 648px;
+
+  margin: 0;
+  padding: 48px 60px;
+}
+
+//
+
+.nav-trigger {
+  position: absolute;
+  clip: rect(0, 0, 0, 0);
+}
+
+label[for="nav-trigger"] {
+  /* critical positioning styles */
+  position: absolute;
+  left: 15px; top: 15px;
+  z-index: 2;
+  
+  /* non-critical apperance styles */
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' version='1.1' x='0px' y='0px' width='30px' height='30px' viewBox='0 0 30 30' enable-background='new 0 0 30 30' xml:space='preserve'><rect width='30' height='6'/><rect y='24' width='30' height='6'/><rect y='12' width='30' height='6'/></svg>");
+  background-size: contain;
+}
+
+/* Make the Magic Happen */
+.nav-trigger + label, .container {
+  transition: left 0.2s;
+}
+
+.nav-trigger:checked + label {
+  left: 215px;
+}
+
+.nav-trigger:checked ~ .container {
+  left: 200px;
+  box-shadow: 0 0 5px 5px rgba(0,0,0,0.5);
+}
+
+//
+
+// Header
+// .header-container {
+//   display: block;
+//   width: 100%;
+//   height: 62px;
+//   background-color: @highlight;
+
+//   button {
+//     color: @white;
+//   }
+
+//   h2 {
+//     color: @white;
+//   }
+// }
+
+// // Scaffolding
+// // -------------------------
+
+// html {
+//   position: relative;
+//   min-height: 100%;
+// }
+
+// body {
+//   /*padding-top: 60px;*/
+//   /*margin-bottom: 75px;*/
+// }
+
+// footer {
+//   position: absolute;
+//   bottom: 0;
+//   width: 100%;
+//   height: 45px;
+//   line-height: 45px;
+// }
+
+// .issue {
+//   list-style: none;
+//   margin-left: 0;
+//   padding: 1ex;
+//   padding-left: 3em;
+// }
+
+// .issue.BLOCKED {
+//   background: rgba(240,0,0,.1);
+// }
+// .issue.needupdate {
+//   opacity: 0.8; /* subtle mute of initiatives w/ no reported status */
+// }
+
+// .prioritygroup:before {
+//   font-size: x-large;
+//   opacity: 0.3;
+//   margin-left: -1.7em;
+//   float: left;
+// }
+
+// .prioritygroup.p1:before {
+//   content: "P1";
+// }
+
+// .prioritygroup {
+//   border-top: 1px solid rgba(0,0,0,0.1);
+// }
+
+// .prioritygroup.p2:before {
+//   content: "P2";
+// }
+
+// .login {
+//   position: fixed;
+//   top: 15px;
+//   right: 2em;
+//   font-variant: small-caps;
+// }
+
+// .login li {
+//   list-style: none;
+// }
+
+// img.user {
+//   width: 24px;
+//   height: 24px;
+//   margin-right: 12px;
+// }
+
+// .navbar-default {
+//   border: none;
+//   /*background-color: #ff6985;*/
+//   opacity: .8;
+//   margin-bottom: 0;
+//   padding-bottom: 0;
+// }
+
+// .sidebarcol {
+//   padding:0;
+// }
+// .sidebar {
+//   position:fixed;
+//   float: left;
+// }
+
+// .sidebar ul {
+//   padding-left: 0;
+// }
+
+// .sidebar li {
+//   list-style: none;
+//   font-size: x-large;
+//   width: 100%;
+//   padding: .5em;
+//   padding-left: 0;
+//   opacity: .8;
+//   /*background-color: #ff6985;*/
+// }
+
+// .sidebar li.small {
+//   font-size: medium;
+// }
+
+// .sidebar li.active {
+//   font-weight: bold;
+// }
+
+// .sidebar li a {
+//   color: black;
+// }
+// .sidebar li a:hover {
+//   opacity: 1;
+//   text-decoration: none;
+//   color: red;
+// }
+
+// div#heartbeat {
+//   padding-top: 1em;
+//   padding-bottom: 2em;
+// }
+
+// #timeleft {
+//   font-style: italic;
+// }
+
+// .week {
+//   display: inline-block;
+// }
+
+// .day {
+//   display: inline-block;
+//   text-align: center;
+//   padding-top: 1em;
+//   padding-bottom: 1em;
+//   font-size: smaller;
+//   width: 4em;
+//   border: 1px solid rgba(0,0,0,.3);
+//   background-color: rgba(90, 99, 206, 0.9);
+//   color: white;
+//   font-variant: all-small-caps; 
+// }
+
+// .day.holiday {
+//   background-color: rgba(200,100,200,.2);
+//   color: black;
+// }
+// .day.weekend {
+//   background-color: rgba(200,100,200,.2);
+//   color: black;
+// }
+// .day.past {
+//   opacity: .5;
+// }
+// .day.today {
+//   background-color: #111893;
+//   color: white;
+//   border: 3px solid black;
+//   border-radius: 3px;
+// }
+
+// span.placeholderavatar {
+//   width: 32px;
+//   height: 32px;
+//   font-size: xx-large;
+//   float: left;
+//   margin-left: -12px;
+//   margin-right: 12px;
+// }
+
+// img.avatar {
+//   width: 32px;
+//   height: 32px;
+//   float: left;
+//   margin-left: -12px;
+//   margin-right: 12px;
+// }
+
+
+// li
+// ul#issues-now, ul#issues-next {
+//   padding-left: 2em;
+// }
+// li.issue h5 {
+//   margin-bottom: 0.2 ex;
+// }
+
+// li.issue a {
+//   line-height: 1.3em;
+// }
+
+// li.issue p {
+//   padding-left: 1em;
+// }
+
+// li.issue {
+//   padding-bottom: 1em;
+// }
+
+// a.deadline {
+//   padding-left: 1em;
+//   font-size: smaller;
+//   color: rgb(100,100,100);
+// }
+
+// .emoji-outer {
+//   width: 17px;
+// }
+// .emoji-inner {
+//   width: 17px;
+//   padding-left: 17px;
+// }
+
+// li h5 {
+//   margin-left: -1.4em;
+// }
+
+// .tags {
+//   float: right;
+// }
+
+// .tag {
+//   font-size: x-small;
+//   width: 32px;
+//   height: 2em;
+//   border-radius: 3px;
+//   color: white;
+//   padding: .4ex .5em;
+//   margin-right: .5em;
+// }
+
+// .tag.needupdate {
+//   background-color: orange;
+// }
+
+// // Navbar
+// // -------------------------
+
+// .navbar-nav img {
+//   width: 30px;
+//   height: 30px;
+//   margin: -15px 15px -15px;
+// }
+
+// // Alerts
+// // -------------------------
+
+// .alert {
+//   margin-top: 20px;
+// }
+
+// // Thumbnails
+// // -------------------------
+
+// .thumbnail {
+//   padding: 0;
+//   border-radius: 0;
+//   box-shadow: 0 0 5px #ccc, inset 0 0 0 #000;
+// }
+
+// // Font Icons
+// // -------------------------
+
+// .fa,
+// [class^="ion-"] {
+//   margin-right: 5px;
+// }
+
+// li.person {
+//   display: block;
+//   list-style: none;
+//   clear: both;
+//   padding-bottom: 1em;
+//   padding-top: 1em;
+// }
+
+// li.person .avatar {
+//   margin-bottom: 1em;
+// }
+
+// .roles {
+//   padding-left: 3em;
+// }
+
+
+// .footer {
+//   clear:both;
+//   position: fixed;
+//   bottom: 1em;
+//   right: 1em;
+// }

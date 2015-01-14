@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html class="no-js">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <title>Build - {{title}}</title>
+
+    <meta name="description" content="Let's Build Webmaker Together">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="stylesheet/less" type="text/css" href="/css/styles.less" />
+    <script type="text/javascript" src="/js/lib/less.min.js"></script>
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <ul class="navigation">
+      <li><a href="/add">Add Project</a></li>
+
+      <li><a href="/now">This Sprint</a></li>
+      <li><a href="/next">Next Sprint</a></li>
+      <li><a href="/upcoming">Upcoming</a></li>
+
+      <li><a href="/strategy">Strategy</a></li>
+      <li><a href="/dashboard">Dashboard</a></li>
+
+      <li>How We Work</li>
+      <ul>
+        <li><a href="/product">Product</a></li>
+        <li><a href="/design">Design</a></li>
+        <li><a href="/engineering">Engineering</a></li>
+      </ul>
+      <li><a href="/involved">Get Involved</a></li>
+    </ul>
+
+    <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <label for="nav-trigger"></label>
+
+    <!-- Container -->
+    <div class="container">
+      <div class="header">
+        <h2>{{title}}</h2>
+      </div>
+
+      <div class="main">
+        {{{body}}}
+      </div>
+    </div>
+
+    <!-- JS -->
+    <script src="/js/scripts.js"></script>
+  </body>
+</html>

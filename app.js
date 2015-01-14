@@ -16,17 +16,9 @@ var errorHandler = require('errorhandler');
 var sessions = require('client-sessions');
 var lusca = require('lusca');
 var flash = require('express-flash');
+var hbs = require('hbs');
 var path = require('path');
 var expressValidator = require('express-validator');
-var connectAssets = require('connect-assets');
-
-/**
- * Controllers (route handlers).
- */
-var simpleController = require('./controllers/simple');
-var userController = require('./controllers/user');
-var apiController = require('./controllers/api');
-var intakeController = require('./controllers/intake');
 
 /**
  * Import API keys from environment
@@ -63,7 +55,8 @@ app.set('port', process.env.PORT || 3000);
 app.set('views', path.join(__dirname, 'views'));
 app.set('github_org', 'MozillaFoundation');
 app.set('github_repo', 'plan');
-app.set('view engine', 'jade');
+app.set('view engine', 'hbs');
+app.set('views', __dirname + '/views');
 
 app.use(sessions({
   cookieName: 'session',
@@ -72,9 +65,6 @@ app.use(sessions({
   activeDuration: 1000 * 60 * 5
 }));
 app.use(compress());
-app.use(connectAssets({
-  paths: [path.join(__dirname, 'public/css'), path.join(__dirname, 'public/js')]
-}));
 app.use(express.static(
   path.join(__dirname, 'public'), { maxAge: 1000 * 3600 * 24 * 365.25 })
 );
@@ -97,41 +87,62 @@ app.use(function(req, res, next) {
 });
 
 /**
+ * Controllers (route handlers).
+ */
+var routes = {
+  analytics: require('./controllers/analytics'),
+  static: require('./controllers/static'),
+  schedule: require('./controllers/schedule')
+};
+
+/**
  * Main routes.
  */
-app.get('/', simpleController.index);
-app.get('/now', simpleController.now);
-app.get('/next', simpleController.next);
-app.get('/who', simpleController.who);
-app.get('/design', simpleController.design);
-app.get('/tools', simpleController.tools);
-app.get('/mentions', simpleController.mentions);
+app.get('/', routes.static.splash);
 
-app.get('/login', userController.getLogin);
-app.get('/logout', userController.logout);
+app.get('/add', routes.schedule.add);
+app.get('/now', routes.schedule.now);
+app.get('/next', routes.schedule.next);
+app.get('/upcoming', routes.schedule.upcoming);
 
-app.get('/intake', function (req, res, next) {
-  if (req.session.token) return next();
-  req.flash('errors', {msg: 'You must be signed-in to add a project.'});
-  next();
-}, intakeController.getIntake);
-app.post('/intake', intakeController.postIntake);
+app.get('/strategy', routes.static.strategy);
+app.get('/dashboard', routes.analytics.dashboard);
 
-app.get('/api/issues', apiController.getIssues)
-app.get('/api/user', apiController.getUser)
+app.get('/product', routes.static.product);
+app.get('/design', routes.static.design);
+app.get('/engineering', routes.static.engineering);
+app.get('/involved', routes.static.involved);
 
-app.get('/auth/github', oauth.login);
-app.get('/auth/github/callback', function (req, res) {
-  oauth.callback(req, res, function (err, body) {
-    if (err) {
-      req.flash('errors', {msg: err});
-    } else {
-      req.session.token = body.access_token;
-    }
+// app.get('/who', simpleController.who);
+// app.get('/design', simpleController.design);
+// app.get('/tools', simpleController.tools);
+// app.get('/mentions', simpleController.mentions);
 
-    res.redirect('/');
-  });
-});
+// app.get('/login', userController.getLogin);
+// app.get('/logout', userController.logout);
+
+// app.get('/intake', function (req, res, next) {
+//   if (req.session.token) return next();
+//   req.flash('errors', {msg: 'You must be signed-in to add a project.'});
+//   next();
+// }, intakeController.getIntake);
+// app.post('/intake', intakeController.postIntake);
+
+// app.get('/api/issues', apiController.getIssues)
+// app.get('/api/user', apiController.getUser)
+
+// app.get('/auth/github', oauth.login);
+// app.get('/auth/github/callback', function (req, res) {
+//   oauth.callback(req, res, function (err, body) {
+//     if (err) {
+//       req.flash('errors', {msg: err});
+//     } else {
+//       req.session.token = body.access_token;
+//     }
+
+//     res.redirect('/');
+//   });
+// });
 
 /**
  * 500 Error Handler.
