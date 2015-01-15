@@ -90,7 +90,6 @@ app.use(function(req, res, next) {
  * Controllers (route handlers).
  */
 var routes = {
-  analytics: require('./controllers/analytics'),
   static: require('./controllers/static'),
   schedule: require('./controllers/schedule')
 };
@@ -106,7 +105,7 @@ app.get('/next', routes.schedule.next);
 app.get('/upcoming', routes.schedule.upcoming);
 
 app.get('/strategy', routes.static.strategy);
-app.get('/dashboard', routes.analytics.dashboard);
+app.get('/dashboard', routes.static.dashboard);
 
 app.get('/product', routes.static.product);
 app.get('/design', routes.static.design);

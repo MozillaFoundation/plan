@@ -5,6 +5,13 @@
  * @author  Andrew Sliwinski <a@mozillafoundation.org>
  */
 
+var secrets = require('../config/secrets');
+var Github = require('../models/github');
+var github = new Github(
+  secrets.github.clientID,
+  secrets.github.clientSecret
+);
+
 /**
  * "Add Project" route handler.
  *
@@ -14,9 +21,9 @@
  * @return {void}
  */
 exports.add = function (req, res) {
-    res.render('add', {
-        title: 'Add Project'
-    });
+  res.render('add', {
+    title: 'Add Project'
+  });
 };
 
 /**
@@ -28,9 +35,16 @@ exports.add = function (req, res) {
  * @return {void}
  */
 exports.now = function (req, res) {
-    res.render('now', {
-        title: 'This Sprint'
-    });
+  github.thisMilestone(function (err, body) {
+    if (err) res.redirect('/500');
+
+    console.dir(body[0].labels);
+
+    res.render('sprint', {
+        title: 'This Sprint',
+        issues: body
+    });    
+  });
 };
 
 /**
@@ -42,7 +56,7 @@ exports.now = function (req, res) {
  * @return {void}
  */
 exports.next = function (req, res) {
-    res.render('next', {
+    res.render('sprint', {
         title: 'Next Sprint'
     });
 };
@@ -56,7 +70,7 @@ exports.next = function (req, res) {
  * @return {void}
  */
 exports.upcoming = function (req, res) {
-    res.render('next', {
+    res.render('calendar', {
         title: 'Upcoming'
     });
 };

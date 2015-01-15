@@ -1,0 +1,67 @@
+// Tags
+html, body {
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+
+  color: @black;
+  background-color: @background;
+
+  font-family: 'Fira Sans', Helvetica, sans-serif;
+  font-weight: 400;
+}
+
+h1 {
+  font-weight: 200;
+}
+
+h2,h3,h4 {
+  font-weight: 300;
+}
+
+// Elements
+.container {
+  display: block;
+  position: relative;
+  min-width: 100%;
+  min-height: 100%;
+
+  top: 0;
+  bottom: 100%;
+  left: 0;
+
+  z-index: 1;
+  margin: -20px 0 0 0;
+  padding: 0;
+
+  background-color: @background;
+}
+
+.header {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 62px;
+
+  color: @white;
+  background-color: @highlight;
+
+  h2 {
+    line-height: 62px;
+    margin-left: 60px;
+  }
+}
+
+.main {
+  display: block;
+  position: relative;
+  width: 648px;
+
+  margin: 0;
+  padding: 48px 60px;
+
+  h2,h3,h4 {
+    margin: 0;
+  }
+}

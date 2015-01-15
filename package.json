@@ -30,6 +30,7 @@
     "instagram-node": "~0.5.1",
     "less": "~1.7.5",
     "lodash": "~2.4.1",
+    "lru-cache": "~2.5.0",
     "lusca": "~1.0.2",
     "method-override": "~2.3.0",
     "mongoose": "~3.8.19",

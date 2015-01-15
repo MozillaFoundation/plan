@@ -1,0 +1,23 @@
+<div id="sprint">
+    <h2>Top Priorities</h2>
+    <ul class="issues">
+        {{#each issues}}
+        <li>
+            <img src="{{assignee.avatar_url}}" alt="{{assignee.login}}">
+            <h4>{{title}}</h4>
+            <p>{{body}}</p>
+            <p>{{html_url}}</p>
+            <ul class="labels">
+                {{#each labels}}
+                <li style="background-color: #{{color}}">{{name}}</li>
+                {{/each}}
+            </ul>
+        </li>
+        {{/each}}
+    </ul>
+
+    <h2>Other Priorities</h2>
+    <div class="group">
+    
+    </div>
+</div>
