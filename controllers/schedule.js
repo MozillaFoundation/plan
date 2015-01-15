@@ -38,8 +38,6 @@ exports.now = function (req, res) {
   github.thisMilestone(function (err, body) {
     if (err) res.redirect('/500');
 
-    console.dir(body[0].labels);
-
     res.render('sprint', {
         title: 'This Sprint',
         issues: body
@@ -56,9 +54,14 @@ exports.now = function (req, res) {
  * @return {void}
  */
 exports.next = function (req, res) {
+  github.nextMilestone(function (err, body) {
+    if (err) res.redirect('/500');
+
     res.render('sprint', {
-        title: 'Next Sprint'
-    });
+        title: 'Next Sprint',
+        issues: body
+    });    
+  });
 };
 
 /**

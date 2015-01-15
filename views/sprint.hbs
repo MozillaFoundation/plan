@@ -1,12 +1,17 @@
 <div id="sprint">
     <h2>Top Priorities</h2>
     <ul class="issues">
-        {{#each issues}}
-        <li>
-            <img src="{{assignee.avatar_url}}" alt="{{assignee.login}}">
-            <h4>{{title}}</h4>
-            <p>{{body}}</p>
-            <p>{{html_url}}</p>
+        {{#each issues.p1}}
+        <li class="clearfix">
+            <a href="{{html_url}}" target="_blank">
+                {{#if assignee.avatar_url}}
+                <img src="{{assignee.avatar_url}}" alt="{{assignee.login}}">
+                {{else}}
+                <img src="/svg/unknown.svg" alt="">
+                {{/if}}
+                <h3>{{title}}</h3>
+                <p>{{body}}</p>
+            </a>
             <ul class="labels">
                 {{#each labels}}
                 <li style="background-color: #{{color}}">{{name}}</li>
@@ -17,7 +22,24 @@
     </ul>
 
     <h2>Other Priorities</h2>
-    <div class="group">
-    
-    </div>
+    <ul class="issues">
+        {{#each issues.p2}}
+        <li class="clearfix">
+            <a href="{{html_url}}" target="_blank">
+                {{#if assignee.avatar_url}}
+                <img src="{{assignee.avatar_url}}" alt="{{assignee.login}}">
+                {{else}}
+                <img src="/svg/unknown.svg" alt="">
+                {{/if}}
+                <h3>{{title}}</h3>
+                <p>{{body}}</p>
+            </a>
+            <ul class="labels">
+                {{#each labels}}
+                <li style="background-color: #{{color}}">{{name}}</li>
+                {{/each}}
+            </ul>
+        </li>
+        {{/each}}
+    </ul>
 </div>

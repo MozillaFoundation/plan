@@ -17,6 +17,7 @@ function Github(client, secret) {
 
   _this.client = client;
   _this.secret = secret;
+  _this.token = secrets.github.token;
   _this.host = 'https://api.github.com';
   _this.repo = '/repos/mozillafoundation/plan';
   _this.cache = lru({
@@ -53,6 +54,37 @@ function Github(client, secret) {
       next();
     });
   };
+
+  /**
+   * Returns an object of arrays for "p1" and "p2" issues.
+   *
+   * @param  {array} issues  Issues from the Github api
+   *
+   * @return {object}
+   */
+  _this.sortIssuesByPriority = function(issues) {
+    var result = {
+      p1: [],
+      p2: []
+    };
+
+    for (var i = 0; i < issues.length; i++) {
+      var issue = issues[i];
+      var isPriority = false;
+
+      for (var l = 0; l < issue.labels.length; l++) {
+        if (issue.labels[l].name === 'p1') {
+          isPriority = true;
+          break;
+        }
+      }
+
+      var target = (isPriority) ? result.p1 : result.p2;
+      target.push(issue);
+    }
+
+    return result;
+  }
 }
 
 /**
@@ -100,7 +132,8 @@ Github.prototype.getMilestones = function(callback) {
     uri: url,
     headers: {
       'User-Agent': 'build.webmaker.org',
-      Accept: 'application/vnd.github.v3+json'
+      Accept: 'application/vnd.github.v3+json',
+      Authorization: 'token ' + _this.token
     },
     json: {}
   }, function(err, res, body) {
@@ -116,7 +149,7 @@ Github.prototype.getIssuesForMilestone = function(id, callback) {
   var _this = this;
 
   // Cache target
-  var url = _this.host + _this.repo + '/issues';
+  var url = _this.host + _this.repo + '/issues?milestone=' + id;
   var copy = _this.cache.get(url);
   if (typeof copy !== 'undefined') {
     return callback(null, copy);
@@ -128,11 +161,8 @@ Github.prototype.getIssuesForMilestone = function(id, callback) {
     uri: url,
     headers: {
       'User-Agent': 'build.webmaker.org',
-      Accept: 'application/vnd.github.v3+json'
-    },
-    qs: {
-      milestone: id,
-      state: 'open'
+      Accept: 'application/vnd.github.v3+json',
+      Authorization: 'token ' + _this.token
     },
     json: {}
   }, function(err, res, body) {
@@ -149,7 +179,12 @@ Github.prototype.thisMilestone = function(callback) {
 
   _this.getMilestones(function (err, milestones) {
     if (err) return callback(err);
-    _this.getIssuesForMilestone(milestones[0].number, callback);
+
+    _this.getIssuesForMilestone(milestones[0].number, function (err, result) {
+      if (err) return callback(err);
+
+      return callback(null, _this.sortIssuesByPriority(result));
+    });
   });
 };
 
@@ -158,7 +193,12 @@ Github.prototype.nextMilestone = function(callback) {
 
   _this.getMilestones(function (err, milestones) {
     if (err) return callback(err);
-    _this.getIssuesForMilestone(milestones[1].number, callback);
+
+    _this.getIssuesForMilestone(milestones[1].number, function (err, result) {
+      if (err) return callback(err);
+
+      return callback(null, _this.sortIssuesByPriority(result));
+    });
   });
 };
 
