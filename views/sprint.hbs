@@ -5,9 +5,9 @@
         <li class="clearfix">
             <a href="{{html_url}}" target="_blank">
                 {{#if assignee.avatar_url}}
-                <img src="{{assignee.avatar_url}}" alt="{{assignee.login}}">
+                <img src="{{assignee.avatar_url}}" title="Assigned to" alt="{{assignee.login}}">
                 {{else}}
-                <img src="/svg/unknown.svg" alt="">
+                <img src="{{user.avatar_url}}" title="Created by" alt="{{user.login}}">
                 {{/if}}
                 <h3>{{title}}</h3>
                 <p>{{body}}</p>
@@ -27,9 +27,9 @@
         <li class="clearfix">
             <a href="{{html_url}}" target="_blank">
                 {{#if assignee.avatar_url}}
-                <img src="{{assignee.avatar_url}}" alt="{{assignee.login}}">
+                <img src="{{assignee.avatar_url}}" title="Assigned to" alt="{{assignee.login}}">
                 {{else}}
-                <img src="/svg/unknown.svg" alt="">
+                <img src="{{user.avatar_url}}" title="Created by" alt="{{user.login}}">
                 {{/if}}
                 <h3>{{title}}</h3>
                 <p>{{body}}</p>

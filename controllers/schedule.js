@@ -73,7 +73,12 @@ exports.next = function (req, res) {
  * @return {void}
  */
 exports.upcoming = function (req, res) {
+  github.upcomingMilestones(function (err, body) {
+    if (err) res.redirect('/500');
+
     res.render('calendar', {
-        title: 'Upcoming'
+        title: 'Upcoming',
+        milestones: body
     });
+  });
 };

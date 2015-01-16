@@ -5,6 +5,7 @@
  * @author   Andrew Sliwinski <a@mozillafoundation.org>
  */
 
+var async = require('async');
 var lru = require('lru-cache');
 var request = require('request');
 var secrets = require('../config/secrets');
@@ -22,7 +23,7 @@ function Github(client, secret) {
   _this.repo = '/repos/mozillafoundation/plan';
   _this.cache = lru({
     max: 100,
-    maxAge: 1000 * 60 * 60
+    maxAge: 1000 * 60 * 5
   });
 
   /**
@@ -199,6 +200,26 @@ Github.prototype.nextMilestone = function(callback) {
 
       return callback(null, _this.sortIssuesByPriority(result));
     });
+  });
+};
+
+Github.prototype.upcomingMilestones = function(callback) {
+  var _this = this;
+
+  // Get milestones
+  _this.getMilestones(function (err, milestones) {
+    if (err) return callback(err);
+
+    // Limit results and map issues
+    var set = milestones.slice(0, 6);
+    async.map(set, function (milestone, callback) {
+      _this.getIssuesForMilestone(milestone.number, function (err, issues) {
+        if (err) return callback(err);
+
+        milestone.issues = issues;
+        callback(null, milestone);
+      });
+    }, callback);
   });
 };
 
