@@ -39,15 +39,12 @@
     <!-- Container -->
     <div class="container">
       <div class="header">
-        <h2>{{title}}</h2>
+        {{#unless hideTitle}}
+          <h2>{{title}}</h2>
+        {{/unless}}
       </div>
 
-      <div class="main">
-        {{{body}}}
-      </div>
+      {{{body}}}
     </div>
-
-    <!-- JS -->
-    <script src="/js/scripts.js"></script>
   </body>
 </html>

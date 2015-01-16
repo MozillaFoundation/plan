@@ -15,7 +15,8 @@
  */
 exports.splash = function (req, res) {
   res.render('splash', {
-    title: 'Let\'s Build Webmaker Together'
+    title: 'Let\'s Build Webmaker Together',
+    hideTitle: true
   });
 };
 

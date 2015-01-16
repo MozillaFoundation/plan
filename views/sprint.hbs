@@ -1,45 +1,47 @@
-<div id="sprint">
-    <h2>Top Priorities</h2>
-    <ul class="issues">
-        {{#each issues.p1}}
-        <li class="clearfix">
-            <a href="{{html_url}}" target="_blank">
-                {{#if assignee.avatar_url}}
-                <img src="{{assignee.avatar_url}}" title="Assigned to" alt="{{assignee.login}}">
-                {{else}}
-                <img src="{{user.avatar_url}}" title="Created by" alt="{{user.login}}">
-                {{/if}}
-                <h3>{{title}}</h3>
-                <p>{{body}}</p>
-            </a>
-            <ul class="labels">
-                {{#each labels}}
-                <li style="background-color: #{{color}}">{{name}}</li>
-                {{/each}}
-            </ul>
-        </li>
-        {{/each}}
-    </ul>
+<div class="main">
+    <div id="sprint">
+        <h2>Top Priorities</h2>
+        <ul class="issues">
+            {{#each issues.p1}}
+            <li class="clearfix">
+                <a href="{{html_url}}" target="_blank">
+                    {{#if assignee.avatar_url}}
+                    <img src="{{assignee.avatar_url}}" title="Assigned to" alt="{{assignee.login}}">
+                    {{else}}
+                    <img src="{{user.avatar_url}}" title="Created by" alt="{{user.login}}">
+                    {{/if}}
+                    <h3>{{title}}</h3>
+                    <p>{{body}}</p>
+                </a>
+                <ul class="labels">
+                    {{#each labels}}
+                    <li style="background-color: #{{color}}">{{name}}</li>
+                    {{/each}}
+                </ul>
+            </li>
+            {{/each}}
+        </ul>
 
-    <h2>Other Priorities</h2>
-    <ul class="issues">
-        {{#each issues.p2}}
-        <li class="clearfix">
-            <a href="{{html_url}}" target="_blank">
-                {{#if assignee.avatar_url}}
-                <img src="{{assignee.avatar_url}}" title="Assigned to" alt="{{assignee.login}}">
-                {{else}}
-                <img src="{{user.avatar_url}}" title="Created by" alt="{{user.login}}">
-                {{/if}}
-                <h3>{{title}}</h3>
-                <p>{{body}}</p>
-            </a>
-            <ul class="labels">
-                {{#each labels}}
-                <li style="background-color: #{{color}}">{{name}}</li>
-                {{/each}}
-            </ul>
-        </li>
-        {{/each}}
-    </ul>
+        <h2>Other Priorities</h2>
+        <ul class="issues">
+            {{#each issues.p2}}
+            <li class="clearfix">
+                <a href="{{html_url}}" target="_blank">
+                    {{#if assignee.avatar_url}}
+                    <img src="{{assignee.avatar_url}}" title="Assigned to" alt="{{assignee.login}}">
+                    {{else}}
+                    <img src="{{user.avatar_url}}" title="Created by" alt="{{user.login}}">
+                    {{/if}}
+                    <h3>{{title}}</h3>
+                    <p>{{body}}</p>
+                </a>
+                <ul class="labels">
+                    {{#each labels}}
+                    <li style="background-color: #{{color}}">{{name}}</li>
+                    {{/each}}
+                </ul>
+            </li>
+            {{/each}}
+        </ul>
+    </div>
 </div>
