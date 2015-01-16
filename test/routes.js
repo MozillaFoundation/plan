@@ -17,29 +17,29 @@ describe('GET /add', function() {
   });
 });
 
-describe('GET /now', function() {
-  it('should return 200 OK', function(done) {
-    request(app)
-      .get('/now')
-      .expect(200, done);
-  });
-});
+// describe('GET /now', function() {
+//   it('should return 200 OK', function(done) {
+//     request(app)
+//       .get('/now')
+//       .expect(200, done);
+//   });
+// });
 
-describe('GET /next', function() {
-  it('should return 200 OK', function(done) {
-    request(app)
-      .get('/next')
-      .expect(200, done);
-  });
-});
+// describe('GET /next', function() {
+//   it('should return 200 OK', function(done) {
+//     request(app)
+//       .get('/next')
+//       .expect(200, done);
+//   });
+// });
 
-describe('GET /upcoming', function() {
-  it('should return 200 OK', function(done) {
-    request(app)
-      .get('/upcoming')
-      .expect(200, done);
-  });
-});
+// describe('GET /upcoming', function() {
+//   it('should return 200 OK', function(done) {
+//     request(app)
+//       .get('/upcoming')
+//       .expect(200, done);
+//   });
+// });
 
 describe('GET /random-url', function() {
   it('should return 404', function(done) {
