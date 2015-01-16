@@ -1,8 +1,13 @@
 language: node_js
 node_js:
-  - '0.10'
+- '0.10'
 env:
-  - PLAN_SESSION_SECRET="SUPERSECRETOMG"
+  matrix:
+  - secure: wFtxdYwLZrff4eS4lQ+HPt9HWF/rmr1iqlYJDgTq+wpfWVeOz5VmJmhq0ogW4+IPoSV0lIDNthzRYBaRWV1QwsQa184vD6WnMsgapcS3IJZ4MVZpDAG8BrgmdhY7OkYSbcmKL4BnDHb1SMQ174ZBmJb1l3NIMrkaqvrr0oUvIiY=
+  - secure: OYTEu0r1VoRlUVMxpOIYpRoq+umQ5mnzfaAs2ipV6DrtWjh8LzuWjxR9SrYzsaUwTsyBkR1ye9VySZvk1bC8uqMVFJ9rdK5sGh+u8NrLvvDJWgiKMaahU5Vl+N0R86bL0E0Kf8MmXHxK1I2Mk/doJMyzfy54rH/xkjl+x0/i7Ko=
+  - secure: FHCPDFYYv1BYq3QSK+Y2v+Oa8nx7lnx5R5AGXF77njml/NGrapEC6vcH/0YFbJGoaxMOY0DwawrYfTLtb57VUZP+mTFkZfcXIdATpMzPlqDdmf8NO4pjEJS3kVvsxIbHzRVQT+6IAqsBIwjk9grIMupzPNYwvXDClodrnJhUmQA=
+  - secure: cNHkhtrvXG56M78KP5XkmPTFUO0n65VAZCKIWRJdp/kh+VT2eYrb9o44RjbLutSzTirtY7L/J9g8QkylruZF9qcxJW6QCVMCdr1iYTkW01hy/AKzhzKOJv+GycqvcrbFhEaPcrjeXJ2j0UyJYwODPe4jmZhALassgnqFIE5cXuQ=
+  - secure: iECrrjB6TSxsS62Wqy7vJz0y/H3J7TnD4MEQ6FX5aFCvzsLfmX3yLdSmrVTmTZveQf0t7XKT2YQvAhRsT3LImfSSe8cy8nRChTeIDR3qS5PGfL0Ss7u5vKK2ikpCteiTONv1BHe0N/lQJWs/FD7+odZdf9BGjEpWx4B6/ZW+Qi0=
 deploy:
   provider: heroku
   app: mofo-intake
