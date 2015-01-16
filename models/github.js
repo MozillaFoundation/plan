@@ -205,7 +205,9 @@ Github.prototype.thisMilestone = function(callback) {
   _this.getMilestones(function(err, milestones) {
     if (err) return callback(err);
 
-    _this.getIssuesForMilestone(milestones[0].number, function(err, result) {
+    var milestone = milestones[0];
+    if (typeof milestone === 'undefined') return callback('404');
+    _this.getIssuesForMilestone(milestone.number, function(err, result) {
       if (err) return callback(err);
 
       return callback(null, _this.sortIssuesByPriority(result));
@@ -219,7 +221,9 @@ Github.prototype.nextMilestone = function(callback) {
   _this.getMilestones(function(err, milestones) {
     if (err) return callback(err);
 
-    _this.getIssuesForMilestone(milestones[1].number, function(err, result) {
+    var milestone = milestones[1];
+    if (typeof milestone === 'undefined') return callback('404');
+    _this.getIssuesForMilestone(milestone.number, function(err, result) {
       if (err) return callback(err);
 
       return callback(null, _this.sortIssuesByPriority(result));
