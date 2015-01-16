@@ -112,6 +112,30 @@ Github.prototype.getUserFromToken = function(token, callback) {
 };
 
 /**
+ * Creates a new issue using the provided token and body object.
+ *
+ * @param  {string}   token    OAuth token provided by Github
+ * @param  {object}   body     Issue body
+ * @param  {Function} callback
+ */
+Github.prototype.postIssueWithToken = function(token, body, callback) {
+  var _this = this;
+
+  request({
+    method: 'POST',
+    uri: _this.host + _this.repo + '/issues',
+    headers: {
+      'User-Agent': 'build.webmaker.org',
+      Accept: 'application/vnd.github.v3+json',
+      Authorization: 'token ' + token
+    },
+    json: body
+  }, function(err, res, body) {
+    callback(err, body);
+  });
+};
+
+/**
  * Returns an array of milestones from the "plan" repo.
  *
  * @param  {string}   token    OAuth token provided by Github

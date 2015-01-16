@@ -6,6 +6,7 @@
  */
 
 var secrets = require('../config/secrets');
+var form = require('../models/form');
 var Github = require('../models/github');
 var github = new Github(
   secrets.github.clientID,
@@ -83,6 +84,21 @@ exports.upcoming = function(req, res) {
   });
 };
 
+/**
+ * Form post route handler.
+ *
+ * @param  {object} req Request
+ * @param  {object} res Response
+ *
+ * @return {void}
+ */
 exports.post = function(req, res) {
-  console.dir(req.body);
+  form(req, res, function(err, body) {
+    if (err) res.redirect('/500');
+
+    github.postIssueWithToken(req.session.token, body, function(err, body) {
+      if (err) res.redirect('/500');
+      res.redirect(body.html_url);
+    });
+  });
 };

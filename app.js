@@ -114,6 +114,10 @@ app.get('/auth/github/callback', function (req, res) {
     res.redirect('/add');
   });
 });
+app.get('/logout', function (req, res) {
+  req.session.token = null;
+  res.redirect('/');
+});
 
 /**
  * 500 Error Handler.
