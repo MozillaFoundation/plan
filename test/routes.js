@@ -9,10 +9,10 @@ describe('GET /', function() {
   });
 });
 
-describe('GET /intake', function() {
+describe('GET /add', function() {
   it('should return 200 OK', function(done) {
     request(app)
-      .get('/login')
+      .get('/add')
       .expect(200, done);
   });
 });
@@ -20,23 +20,23 @@ describe('GET /intake', function() {
 describe('GET /now', function() {
   it('should return 200 OK', function(done) {
     request(app)
-      .get('/login')
+      .get('/now')
       .expect(200, done);
   });
 });
 
-describe('GET /login', function() {
+describe('GET /next', function() {
   it('should return 200 OK', function(done) {
     request(app)
-      .get('/login')
+      .get('/next')
       .expect(200, done);
   });
 });
 
-describe('GET /logout', function() {
+describe('GET /upcoming', function() {
   it('should return 200 OK', function(done) {
     request(app)
-      .get('/login')
+      .get('/upcoming')
       .expect(200, done);
   });
 });

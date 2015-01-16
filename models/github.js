@@ -178,10 +178,10 @@ Github.prototype.getIssuesForMilestone = function(id, callback) {
 Github.prototype.thisMilestone = function(callback) {
   var _this = this;
 
-  _this.getMilestones(function (err, milestones) {
+  _this.getMilestones(function(err, milestones) {
     if (err) return callback(err);
 
-    _this.getIssuesForMilestone(milestones[0].number, function (err, result) {
+    _this.getIssuesForMilestone(milestones[0].number, function(err, result) {
       if (err) return callback(err);
 
       return callback(null, _this.sortIssuesByPriority(result));
@@ -192,10 +192,10 @@ Github.prototype.thisMilestone = function(callback) {
 Github.prototype.nextMilestone = function(callback) {
   var _this = this;
 
-  _this.getMilestones(function (err, milestones) {
+  _this.getMilestones(function(err, milestones) {
     if (err) return callback(err);
 
-    _this.getIssuesForMilestone(milestones[1].number, function (err, result) {
+    _this.getIssuesForMilestone(milestones[1].number, function(err, result) {
       if (err) return callback(err);
 
       return callback(null, _this.sortIssuesByPriority(result));
@@ -207,13 +207,13 @@ Github.prototype.upcomingMilestones = function(callback) {
   var _this = this;
 
   // Get milestones
-  _this.getMilestones(function (err, milestones) {
+  _this.getMilestones(function(err, milestones) {
     if (err) return callback(err);
 
     // Limit results and map issues
     var set = milestones.slice(0, 6);
-    async.map(set, function (milestone, callback) {
-      _this.getIssuesForMilestone(milestone.number, function (err, issues) {
+    async.map(set, function(milestone, callback) {
+      _this.getIssuesForMilestone(milestone.number, function(err, issues) {
         if (err) return callback(err);
 
         milestone.issues = issues;

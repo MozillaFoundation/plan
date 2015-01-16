@@ -14,7 +14,6 @@ var logger = require('morgan');
 var errorHandler = require('errorhandler');
 
 var sessions = require('client-sessions');
-var lusca = require('lusca');
 var flash = require('express-flash');
 var hbs = require('hbs');
 var path = require('path');
@@ -72,19 +71,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressValidator());
-app.use(lusca.csrf());
 app.use(cookieParser());
 app.use(flash());
 app.use(github.middleware);
-
-/**
- * CORS
- */
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
 
 /**
  * Controllers (route handlers).
@@ -112,36 +101,19 @@ app.get('/design', routes.static.design);
 app.get('/engineering', routes.static.engineering);
 app.get('/involved', routes.static.involved);
 
-// app.get('/who', simpleController.who);
-// app.get('/design', simpleController.design);
-// app.get('/tools', simpleController.tools);
-// app.get('/mentions', simpleController.mentions);
+app.post('/add', routes.schedule.post);
+app.get('/auth/github', oauth.login);
+app.get('/auth/github/callback', function (req, res) {
+  oauth.callback(req, res, function (err, body) {
+    if (err) {
+      req.flash('errors', {msg: err});
+    } else {
+      req.session.token = body.access_token;
+    }
 
-// app.get('/login', userController.getLogin);
-// app.get('/logout', userController.logout);
-
-// app.get('/intake', function (req, res, next) {
-//   if (req.session.token) return next();
-//   req.flash('errors', {msg: 'You must be signed-in to add a project.'});
-//   next();
-// }, intakeController.getIntake);
-// app.post('/intake', intakeController.postIntake);
-
-// app.get('/api/issues', apiController.getIssues)
-// app.get('/api/user', apiController.getUser)
-
-// app.get('/auth/github', oauth.login);
-// app.get('/auth/github/callback', function (req, res) {
-//   oauth.callback(req, res, function (err, body) {
-//     if (err) {
-//       req.flash('errors', {msg: err});
-//     } else {
-//       req.session.token = body.access_token;
-//     }
-
-//     res.redirect('/');
-//   });
-// });
+    res.redirect('/add');
+  });
+});
 
 /**
  * 500 Error Handler.

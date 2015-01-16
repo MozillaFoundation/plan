@@ -20,7 +20,7 @@ var github = new Github(
  *
  * @return {void}
  */
-exports.add = function (req, res) {
+exports.add = function(req, res) {
   res.render('add', {
     title: 'Add Project'
   });
@@ -34,14 +34,14 @@ exports.add = function (req, res) {
  *
  * @return {void}
  */
-exports.now = function (req, res) {
-  github.thisMilestone(function (err, body) {
+exports.now = function(req, res) {
+  github.thisMilestone(function(err, body) {
     if (err) res.redirect('/500');
 
     res.render('sprint', {
         title: 'This Sprint',
         issues: body
-    });    
+    });
   });
 };
 
@@ -53,14 +53,14 @@ exports.now = function (req, res) {
  *
  * @return {void}
  */
-exports.next = function (req, res) {
-  github.nextMilestone(function (err, body) {
+exports.next = function(req, res) {
+  github.nextMilestone(function(err, body) {
     if (err) res.redirect('/500');
 
     res.render('sprint', {
         title: 'Next Sprint',
         issues: body
-    });    
+    });
   });
 };
 
@@ -72,8 +72,8 @@ exports.next = function (req, res) {
  *
  * @return {void}
  */
-exports.upcoming = function (req, res) {
-  github.upcomingMilestones(function (err, body) {
+exports.upcoming = function(req, res) {
+  github.upcomingMilestones(function(err, body) {
     if (err) res.redirect('/500');
 
     res.render('calendar', {
@@ -81,4 +81,8 @@ exports.upcoming = function (req, res) {
         milestones: body
     });
   });
+};
+
+exports.post = function(req, res) {
+  console.dir(req.body);
 };
