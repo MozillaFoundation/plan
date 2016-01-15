@@ -1,6 +1,6 @@
 # The Mozilla Foundation Planning Repo
 
-The work in this repo reflects ongoing issues related to the Foundation's [five-year strategic plan](https://wiki.mozilla.org/MoFo_2020).
+The work in this repo reflects ongoing issues related to the Foundation's [awesome five-year strategic plan](https://wiki.mozilla.org/MoFo_2020).
 
 <a http:"#"><img src="https://s3.amazonaws.com/f.cl.ly/items/3M2x2K1U1G0T3F3L2t33/strategic-plan.png?v=b267ee17" alt="5 Year Strategic Plan" width=700px></a>
 
