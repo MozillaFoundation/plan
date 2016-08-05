@@ -1,4 +1,5 @@
 # The Mozilla Foundation Planning Repo
+[![Shipping fast with zenHub](https://raw.githubusercontent.com/ZenHubIO/support/master/zenhub-badge.png)](https://zenhub.com)
 
 The work in this repo reflects ongoing issues related to the Foundation's [awesome five-year strategic plan](https://wiki.mozilla.org/MoFo_2020).
 
